@@ -6,9 +6,9 @@ public class FlockManager : MonoBehaviour {
 
     public static FlockManager FM;
     public GameObject fishPrefab;
-    public int numFish = 20;
+    public int numFish = 40;
     public GameObject[] allFish;
-    public Vector3 swimLimits = new Vector3(5.0f, 5.0f, 5.0f);
+    public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
     public Vector3 goalPos = Vector3.zero;
 
     [Header("Fish Settings")]
