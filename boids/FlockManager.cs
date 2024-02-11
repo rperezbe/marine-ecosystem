@@ -11,7 +11,8 @@ public class FlockManager : MonoBehaviour {
     public GameObject foodPrefab;
     private float timer = 0.0f; //timer for the food spawn
     public int numFish = 40;
-    public GameObject[] allFish;
+    public GameObject[] allFish; //array of fish to access them later
+    public GameObject[] allHealthBars; //array of health bars to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
     public Vector3 goalPos = Vector3.zero;
 
@@ -29,6 +30,7 @@ public class FlockManager : MonoBehaviour {
     void Start() {
 
         allFish = new GameObject[numFish];
+        allHealthBars = new GameObject[numFish];
 
         for (int i = 0; i < numFish; ++i) {
 
@@ -44,6 +46,7 @@ public class FlockManager : MonoBehaviour {
             //instance of the health bar
             GameObject healthBarInstance = Instantiate(healthBarPrefab, fish.transform);
             healthBarInstance.transform.localPosition = new Vector3(0f, 0.12f, 0f); //relative position to the fish
+            allHealthBars[i] = healthBarInstance;
 
             // Change the fill amount of the health bar to 0.8
             Image fillImage = healthBarInstance.transform.Find("fill").GetComponent<Image>();
