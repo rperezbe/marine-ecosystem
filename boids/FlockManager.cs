@@ -44,6 +44,14 @@ public class FlockManager : MonoBehaviour {
             //instance of the health bar
             GameObject healthBarInstance = Instantiate(healthBarPrefab, fish.transform);
             healthBarInstance.transform.localPosition = new Vector3(0f, 0.12f, 0f); //relative position to the fish
+
+            // Change the fill amount of the health bar to 0.8
+            Image fillImage = healthBarInstance.transform.Find("fill").GetComponent<Image>();
+            if (fillImage != null)
+            {
+                fillImage.fillAmount = 0.6f;
+            }
+        
         }
 
         FM = this;
