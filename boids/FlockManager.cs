@@ -8,7 +8,7 @@ public class FlockManager : MonoBehaviour {
     public GameObject fishPrefab;
     public GameObject healthBarPrefab;
     public GameObject foodPrefab;
-    private float timer = 0.0f;
+    private float timer = 0.0f; //timer for the food spawn
     public int numFish = 40;
     public GameObject[] allFish;
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
