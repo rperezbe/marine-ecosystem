@@ -47,14 +47,6 @@ public class FlockManager : MonoBehaviour {
             GameObject healthBarInstance = Instantiate(healthBarPrefab, fish.transform);
             healthBarInstance.transform.localPosition = new Vector3(0f, 0.12f, 0f); //relative position to the fish
             allHealthBars[i] = healthBarInstance;
-
-            // Change the fill amount of the health bar to 0.8
-            Image fillImage = healthBarInstance.transform.Find("fill").GetComponent<Image>();
-            if (fillImage != null)
-            {
-                fillImage.fillAmount = 0.6f;
-            }
-        
         }
 
         FM = this;
@@ -63,6 +55,14 @@ public class FlockManager : MonoBehaviour {
 
 
     void Update() {
+        //decrease the fill amount of the health bar of all the fishes 0.01 per second
+        for (int i = 0; i < numFish; ++i) {
+            Image fillImage = allHealthBars[i].transform.Find("fill").GetComponent<Image>();
+            if (fillImage != null)
+            {
+                fillImage.fillAmount -= 0.01f * Time.deltaTime;
+            }
+        }
         //update the poistion of the food
         timer += Time.deltaTime;
         if (timer >= spawnInterval) {
