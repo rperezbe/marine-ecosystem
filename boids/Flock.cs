@@ -54,8 +54,17 @@ public class Flock : MonoBehaviour {
         health -= 1;
     }
 
+    //if the fish collides with the food, it will consume the food
+    void OnTriggerEnter(Collider other) {
+        Food foodItem = other.gameObject.GetComponent<Food>();
+        if (foodItem != null) {
+            foodItem.Consume(this);
+            Destroy(other.gameObject); //destroy the food after the fish consumes it
+        }
+    }
+
     //flocking algorithm rules
-    private void ApplyRules() {
+    void ApplyRules() {
         GameObject[] gos;
         gos = FlockManager.FM.allFish;
         Vector3 vCentre = Vector3.zero;
