@@ -52,6 +52,7 @@ public class Flock : MonoBehaviour {
         energy -= 1;
     }
 
+    //flocking algorithm rules
     private void ApplyRules() {
         GameObject[] gos;
         gos = FlockManager.FM.allFish;
