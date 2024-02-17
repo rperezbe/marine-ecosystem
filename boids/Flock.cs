@@ -50,6 +50,8 @@ public class Flock : MonoBehaviour {
 
         //decraese the energy of the fish by 0.01 per second
         energy -= 1;
+        //decrease the health of the fish by 0.01 per second
+        health -= 1;
     }
 
     //flocking algorithm rules
@@ -110,5 +112,12 @@ public class Flock : MonoBehaviour {
     }
     public int getEnergy() {
         return energy;
+    }
+
+    public void setHealth(int newHealth) {
+        health = newHealth;
+    }
+    public int getHealth() {
+        return health;
     }
 }
