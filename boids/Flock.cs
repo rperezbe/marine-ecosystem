@@ -75,7 +75,7 @@ public class Flock : MonoBehaviour {
                 }
             }
         }
-        
+
         //if the fish is part of a group, it will move towards the center of the group
         if (groupSize > 0) {
             vCentre = vCentre / groupSize + (FlockManager.FM.goalPos - this.transform.position);
@@ -91,5 +91,20 @@ public class Flock : MonoBehaviour {
                     FlockManager.FM.rotationSpeed * Time.deltaTime);
             }
         }
+    }
+
+    //getter and setter methods for external classes
+    public void setSpeed(float newSpeed) {
+        speed = newSpeed;
+    }
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setEnergy(int newEnergy) {
+        energy = newEnergy;
+    }
+    public int getEnergy() {
+        return energy;
     }
 }
