@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FlockManager : MonoBehaviour {
-
     public static FlockManager FM;
     public GameObject fishPrefab;
     public GameObject healthBarPrefab;
@@ -30,10 +29,32 @@ public class FlockManager : MonoBehaviour {
     void Start() {
 
         allFish = new GameObject[numFish];
-        allHealthBars = new GameObject[numFish];
+        /*allHealthBars = new GameObject[numFish];*/
 
+        //call to spawn the fishes
+        spawnFishes();
+
+        FM = this; //singleton pattern
+        goalPos = this.transform.position;
+    }
+
+    void Update() {
+        //call to spawn the food
+        spawnFood();
+
+        //decrease the fill amount of the health bar of all the fishes 0.01 per second
+        /*for (int i = 0; i < numFish; ++i) {
+            Image fillImage = allHealthBars[i].transform.Find("fill").GetComponent<Image>();
+            if (fillImage != null)
+            {
+                fillImage.fillAmount -= 0.01f * Time.deltaTime;
+            }
+        }*/
+    }
+
+    //function to spawn the fish
+    void spawnFishes() {
         for (int i = 0; i < numFish; ++i) {
-
             Vector3 pos = this.transform.position + new Vector3(
                 Random.Range(-swimLimits.x, swimLimits.x),
                 Random.Range(-swimLimits.y, swimLimits.y),
@@ -44,26 +65,14 @@ public class FlockManager : MonoBehaviour {
             allFish[i] = fish;
 
             //instance of the health bar
-            GameObject healthBarInstance = Instantiate(healthBarPrefab, fish.transform);
+            /*GameObject healthBarInstance = Instantiate(healthBarPrefab, fish.transform);
             healthBarInstance.transform.localPosition = new Vector3(0f, 0.12f, 0f); //relative position to the fish
-            allHealthBars[i] = healthBarInstance;
+            allHealthBars[i] = healthBarInstance;*/
         }
-
-        FM = this;
-        goalPos = this.transform.position;
     }
 
-
-    void Update() {
-        //decrease the fill amount of the health bar of all the fishes 0.01 per second
-        for (int i = 0; i < numFish; ++i) {
-            Image fillImage = allHealthBars[i].transform.Find("fill").GetComponent<Image>();
-            if (fillImage != null)
-            {
-                fillImage.fillAmount -= 0.01f * Time.deltaTime;
-            }
-        }
-        //update the poistion of the food
+    //function to spawn the food
+    void spawnFood() {
         timer += Time.deltaTime;
         if (timer >= spawnInterval) {
             timer = 0.0f;
@@ -73,13 +82,8 @@ public class FlockManager : MonoBehaviour {
                 Random.Range(-swimLimits.y, swimLimits.y),
                 Random.Range(-swimLimits.z, swimLimits.z));
             Instantiate(foodPrefab, foodPosition, Quaternion.identity);
-        }
-        
-        if (Random.Range(0, 100) < 10) {
-            goalPos = this.transform.position + new Vector3(
-                Random.Range(-swimLimits.x, swimLimits.x),
-                Random.Range(-swimLimits.y, swimLimits.y),
-                Random.Range(-swimLimits.z, swimLimits.z));
+            //goalpos is the position of the food
+            goalPos = foodPosition;
         }
     }
 }
