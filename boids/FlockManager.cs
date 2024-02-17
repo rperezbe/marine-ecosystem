@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class FlockManager : MonoBehaviour {
     public static FlockManager FM;
     public GameObject fishPrefab;
-    public GameObject healthBarPrefab;
-    public GameObject foodPrefab;
+    //public GameObject healthBarPrefab;
+    public GameObject healthyFoodPrefab;
+    public GameObject toxicFoodPrefab;
     private float timer = 0.0f; //timer for the food spawn
     public int numFish = 40;
     public GameObject[] allFish; //array of fish to access them later
@@ -73,10 +74,14 @@ public class FlockManager : MonoBehaviour {
 
     //function to spawn the food
     void spawnFood() {
+        //decide randomly what type of food to spawn
+        GameObject foodPrefab = Random.Range(0, 2) == 0 ? healthyFoodPrefab : toxicFoodPrefab;
         timer += Time.deltaTime;
+        //if the timer is greater than the spawn interval, spawn a new food
         if (timer >= spawnInterval) {
+            //reset the timer
             timer = 0.0f;
-            //create a new sphere on the random position
+            //create food on the random position
             Vector3 foodPosition = this.transform.position + new Vector3(
                 Random.Range(-swimLimits.x, swimLimits.x),
                 Random.Range(-swimLimits.y, swimLimits.y),

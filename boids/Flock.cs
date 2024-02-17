@@ -47,6 +47,9 @@ public class Flock : MonoBehaviour {
             }
         }
         this.transform.Translate(0.0f, 0.0f, speed * Time.deltaTime);
+
+        //decraese the energy of the fish by 0.01 per second
+        energy -= 1;
     }
 
     private void ApplyRules() {
