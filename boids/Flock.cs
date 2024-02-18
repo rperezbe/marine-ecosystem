@@ -7,8 +7,9 @@ public class Flock : MonoBehaviour {
     float speed;
     bool turning = false;
     float fishSize;
-    int health = 100;
-    int energy = 100;
+    public int health = 100;
+    public int energy = 100;
+    float healthEnergyTimer = 0.0f; //timer for the health and energy decrease
 
     void Start() {
         speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
@@ -48,10 +49,13 @@ public class Flock : MonoBehaviour {
         }
         this.transform.Translate(0.0f, 0.0f, speed * Time.deltaTime);
 
-        //decraese the energy of the fish by 0.01 per second
-        energy -= 1;
-        //decrease the health of the fish by 0.01 per second
-        health -= 1;
+        //decrease the health and energy of the fish every second
+        healthEnergyTimer += Time.deltaTime;
+        if(healthEnergyTimer >= 1.0f) {
+            health -= 1;
+            energy -= 1;
+            healthEnergyTimer = 0.0f;
+        }
     }
 
     //if the fish collides with the food, it will consume the food
