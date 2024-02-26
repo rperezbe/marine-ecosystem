@@ -75,6 +75,11 @@ public class Flock : MonoBehaviour {
                 this.transform.Translate(0.0f, 0.0f, speed * Time.deltaTime);
             }
         }
+
+        //if health is less than 0, the fish will die
+        if(health <= 0) {
+            Destroy(this.gameObject);
+        }
     }
 
     //if the fish collides with the food, it will consume the food
