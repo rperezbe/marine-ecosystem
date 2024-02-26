@@ -151,21 +151,24 @@ public class Flock : MonoBehaviour {
 
     //getter and setter methods for external classes
     public void setSpeed(float newSpeed) {
-        speed = newSpeed;
+        //clamp the speed between the min and max speed
+        speed = Mathf.Clamp(newSpeed, FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
     }
     public float getSpeed() {
         return speed;
     }
 
     public void setEnergy(int newEnergy) {
-        energy = newEnergy;
+        //clamp the energy between 0 and 100
+        energy = Mathf.Clamp(newEnergy, 0, 100);
     }
     public int getEnergy() {
         return energy;
     }
 
     public void setHealth(int newHealth) {
-        health = newHealth;
+        //clamp the health between 0 and 100
+        health = Mathf.Clamp(newHealth, 0, 100);
     }
     public int getHealth() {
         return health;
