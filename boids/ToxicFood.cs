@@ -7,11 +7,8 @@ public class ToxicFood : Food
     public override void Consume(Flock consumer) 
     {
         //toxic food doesn't decrease the health but it decreases the energy and the speed of the fish
-        //increase the energy of the fish to 100
-        consumer.setEnergy(100);
         //decrease the energy of the fish by the nutrition value of the food
-        //consumer.setEnergy(consumer.getEnergy() - nutritionValue);
-
+        consumer.setEnergy(consumer.getEnergy() - nutritionValue);
         //decrease the speed of the fish by 0.1
         consumer.setSpeed(consumer.getSpeed() - 0.1f);
         //adjust the cooldown of the fish
