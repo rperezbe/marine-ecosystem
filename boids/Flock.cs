@@ -56,6 +56,20 @@ public class Flock : MonoBehaviour {
             energy -= 1;
             healthEnergyTimer = 0.0f;
         }
+
+        //search for food if the energy of the fish is less than 50
+        if(energy < 80) {
+            GameObject closestFood = FindClosestFood();
+            if (closestFood != null){
+                Vector3 directionToFood = (closestFood.transform.position - transform.position).normalized;
+                //we can adjust the strength of the attraction to food to control how much affect it has on the fish
+                float foodAttractionStrength = 0.1f;
+                Vector3 newDirection = Vector3.Lerp(transform.forward, directionToFood, foodAttractionStrength).normalized;
+                transform.rotation = Quaternion.LookRotation(newDirection);
+                this.transform.Translate(0.0f, 0.0f, speed * Time.deltaTime);
+            }
+        }
+
     }
 
     //if the fish collides with the food, it will consume the food
@@ -65,6 +79,24 @@ public class Flock : MonoBehaviour {
             foodItem.Consume(this);
             Destroy(other.gameObject); //destroy the food after the fish consumes it
         }
+    }
+    
+    //find the closest food to the fish
+    GameObject FindClosestFood() {
+        Food[] foods = FindObjectsOfType<Food>(); //find all the food in the tank
+        GameObject closest = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+
+        foreach (Food food in foods) {
+            Vector3 directionToTarget = food.transform.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr) {
+                closestDistanceSqr = dSqrToTarget;
+                closest = food.gameObject;
+            }
+        }
+        return closest;
     }
 
     //flocking algorithm rules
@@ -97,7 +129,7 @@ public class Flock : MonoBehaviour {
 
         //if the fish is part of a group, it will move towards the center of the group
         if (groupSize > 0) {
-            vCentre = vCentre / groupSize + (FlockManager.FM.goalPos - this.transform.position);
+            vCentre = vCentre / groupSize;
             speed = gSpeed / groupSize;
             if (speed > FlockManager.FM.maxSpeed) {
                 speed = FlockManager.FM.maxSpeed;

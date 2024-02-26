@@ -12,7 +12,6 @@ public class FlockManager : MonoBehaviour {
     public int numFish = 40;
     public GameObject[] allFish; //array of fish to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
-    public Vector3 goalPos = Vector3.zero;
 
     [Header("Fish Settings")]
     [Range(1.0f, 5.0f)] public float minSize;
@@ -26,14 +25,12 @@ public class FlockManager : MonoBehaviour {
     public float spawnInterval = 5.0f;
 
     void Start() {
-
         allFish = new GameObject[numFish];
 
         //call to spawn the fishes
         spawnFishes();
 
         FM = this; //singleton pattern
-        goalPos = this.transform.position;
     }
 
     void Update() {
@@ -70,8 +67,6 @@ public class FlockManager : MonoBehaviour {
                 Random.Range(-swimLimits.y, swimLimits.y),
                 Random.Range(-swimLimits.z, swimLimits.z));
             Instantiate(foodPrefab, foodPosition, Quaternion.identity);
-            //goalpos is the position of the food
-            goalPos = foodPosition;
         }
     }
 }
