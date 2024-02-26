@@ -12,5 +12,6 @@ public class HealthyFood : Food
         consumer.setHealth(consumer.getHealth() + nutritionValue);
         //increase the speed of the fish by 0.1
         consumer.setSpeed(consumer.getSpeed() + 0.1f);
+        //here we don't have cooldown for the fish
     }
 }

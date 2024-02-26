@@ -10,6 +10,7 @@ public class Flock : MonoBehaviour {
     public int health = 100;
     public int energy = 100;
     float healthEnergyTimer = 0.0f; //timer for the health and energy decrease
+    public float searchFoodCooldown = 0f; //cooldown for the fish to search for food
 
     void Start() {
         speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
@@ -57,8 +58,13 @@ public class Flock : MonoBehaviour {
             healthEnergyTimer = 0.0f;
         }
 
-        //search for food if the energy of the fish is less than 50
-        if(energy < 80) {
+        //reduce the cooldown of the fish to search for food
+        if(searchFoodCooldown > 0) {
+            searchFoodCooldown -= Time.deltaTime;
+        }
+
+        //search for food if the energy and the cooldown are ok
+        if(energy < 80 && searchFoodCooldown <= 0) {
             GameObject closestFood = FindClosestFood();
             if (closestFood != null){
                 Vector3 directionToFood = (closestFood.transform.position - transform.position).normalized;
@@ -69,7 +75,6 @@ public class Flock : MonoBehaviour {
                 this.transform.Translate(0.0f, 0.0f, speed * Time.deltaTime);
             }
         }
-
     }
 
     //if the fish collides with the food, it will consume the food

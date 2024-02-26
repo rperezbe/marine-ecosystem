@@ -11,5 +11,7 @@ public class ToxicFood : Food
         consumer.setEnergy(consumer.getEnergy() - nutritionValue);
         //decrease the speed of the fish by 0.1
         consumer.setSpeed(consumer.getSpeed() - 0.1f);
+        //adjust the cooldown of the fish
+        consumer.searchFoodCooldown = 5.0f; //5 seconds cooldown
     }
 }
