@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour {
 
-    float speed;
+    public float speed;
     bool turning = false;
     float fishSize;
     public int health = 100;
@@ -38,10 +38,10 @@ public class Flock : MonoBehaviour {
         //if the fish is not turning, it will move forward
         else {
             //randomly change the speed and the direction of the fish
-            if (Random.Range(0, 100) < 10) {
+            //if (Random.Range(0, 100) < 10) {
                 //randomly change the speed of the fish
-                speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
-            }
+                //speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
+            //}
             if (Random.Range(0, 100) < 10) {
                 //randomly change the direction of the fish
                 ApplyRules();
