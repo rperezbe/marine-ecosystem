@@ -119,8 +119,18 @@ public class Flock : MonoBehaviour {
         float mDistance;
         int groupSize = 0;
 
-        //calculate the center of the group and the distance between the fishes
+        //temporal list to store the valid fish who are still alive
+        List<GameObject> validFish = new List<GameObject>();
+
+        //filter the GameObjects that are still alive
         foreach (GameObject go in gos) {
+            if (go != null && go != this.gameObject) {
+                validFish.Add(go);
+            }
+        }
+
+        //calculate the center of the group and the distance between the fishes
+        foreach (GameObject go in validFish) {
             if (go != this.gameObject) {
                 mDistance = Vector3.Distance(go.transform.position, this.transform.position);
                 //if the distance between the fishes is less than the neighbour distance, the fish will be part of the group
