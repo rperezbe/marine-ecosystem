@@ -81,8 +81,8 @@ public class Flock : MonoBehaviour {
             }
         }
 
-        //influence speed from 0 to max speed depending on the energy
-        speed = Mathf.Lerp(0, FlockManager.FM.maxSpeed, (float)energy / 100);
+        //influence speed from min speed to max speed depending on the energy
+        speed = Mathf.Lerp(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed, (float)energy / 100);
 
         //if health is less than 0, the fish will die
         if(health <= 0) {
