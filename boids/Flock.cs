@@ -55,6 +55,11 @@ public class Flock : MonoBehaviour {
         if(healthEnergyTimer >= 1.0f) {
             health -= 1;
             energy -= 1;
+
+            //clamp the health and energy between 0 and 100
+            health = Mathf.Clamp(health, 0, 100);
+            energy = Mathf.Clamp(energy, 0, 100);
+
             healthEnergyTimer = 0.0f;
         }
 
@@ -75,6 +80,9 @@ public class Flock : MonoBehaviour {
                 this.transform.Translate(0.0f, 0.0f, speed * Time.deltaTime);
             }
         }
+
+        //influence speed from 0 to max speed depending on the energy
+        speed = Mathf.Lerp(0, FlockManager.FM.maxSpeed, (float)energy / 100);
 
         //if health is less than 0, the fish will die
         if(health <= 0) {
@@ -115,7 +123,7 @@ public class Flock : MonoBehaviour {
         gos = FlockManager.FM.allFish;
         Vector3 vCentre = Vector3.zero;
         Vector3 vAvoid = Vector3.zero;
-        float gSpeed = 0.01f;
+        //float gSpeed = 0.01f;
         float mDistance;
         int groupSize = 0;
 
@@ -142,7 +150,7 @@ public class Flock : MonoBehaviour {
                         vAvoid = vAvoid + (this.transform.position - go.transform.position);
                     }
                     Flock anotherFlock = go.GetComponent<Flock>();
-                    gSpeed = gSpeed + anotherFlock.speed;
+                    //gSpeed = gSpeed + anotherFlock.speed;
                 }
             }
         }
@@ -150,7 +158,7 @@ public class Flock : MonoBehaviour {
         //if the fish is part of a group, it will move towards the center of the group
         if (groupSize > 0) {
             vCentre = vCentre / groupSize;
-            speed = gSpeed / groupSize;
+            //speed = gSpeed / groupSize;
             if (speed > FlockManager.FM.maxSpeed) {
                 speed = FlockManager.FM.maxSpeed;
             }
@@ -164,14 +172,15 @@ public class Flock : MonoBehaviour {
         }
     }
 
+    /*SPEED IS NOW WORKING WITH ENERGY 
     //getter and setter methods for external classes
     public void setSpeed(float newSpeed) {
         //clamp the speed between the min and max speed
-        speed = Mathf.Clamp(newSpeed, FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
+        //speed = Mathf.Clamp(newSpeed, FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
     }
     public float getSpeed() {
         return speed;
-    }
+    }*/
 
     public void setEnergy(int newEnergy) {
         //clamp the energy between 0 and 100

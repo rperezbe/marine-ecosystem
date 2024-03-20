@@ -9,8 +9,8 @@ public class ToxicFood : Food
         //toxic food doesn't decrease the health but it decreases the energy and the speed of the fish
         //decrease the energy of the fish by the nutrition value of the food
         consumer.setEnergy(consumer.getEnergy() - nutritionValue);
-        //decrease the speed of the fish by 0.1
-        consumer.setSpeed(consumer.getSpeed() - 0.1f);
+        //SPEED IS NOW WORKING WITH ENERGY decrease the speed of the fish by 0.1
+        //consumer.setSpeed(consumer.getSpeed() - 0.1f);
         //adjust the cooldown of the fish
         consumer.searchFoodCooldown = 5.0f; //5 seconds cooldown
     }
