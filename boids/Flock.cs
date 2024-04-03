@@ -6,7 +6,7 @@ public class Flock : MonoBehaviour {
 
     public float speed;
     bool turning = false;
-    float fishSize;
+    public float fishSize;
     public int health = 100;
     public int energy = 100;
     float healthEnergyTimer = 0.0f; //timer for the health and energy decrease

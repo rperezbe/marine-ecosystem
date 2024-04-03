@@ -8,7 +8,8 @@ public class FlockManager : MonoBehaviour {
     public GameObject fishPrefab;
     public GameObject healthyFoodPrefab;
     public GameObject toxicFoodPrefab;
-    private float timer = 0.0f; //timer for the food spawn
+    private float healthyFoodTimer  = 0.0f; //timer for the food spawn
+    private float toxicFoodTimer  = 0.0f;
     public int numFish = 40;
     public GameObject[] allFish; //array of fish to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
@@ -22,7 +23,8 @@ public class FlockManager : MonoBehaviour {
     [Range(1.0f, 10.0f)] public float neighbourDistance;
     [Range(1.0f, 5.0f)] public float rotationSpeed;
     [Header("Food Settings")]
-    public float spawnInterval = 5.0f;
+    public float healthyFoodSpawnInterval  = 0.5f;
+    public float toxicFoodSpawnInterval = 0.5f;
 
     void Start() {
         allFish = new GameObject[numFish];
@@ -54,19 +56,32 @@ public class FlockManager : MonoBehaviour {
 
     //function to spawn the food
     void spawnFood() {
-        //decide randomly what type of food to spawn
-        GameObject foodPrefab = Random.Range(0, 2) == 0 ? healthyFoodPrefab : toxicFoodPrefab;
-        timer += Time.deltaTime;
-        //if the timer is greater than the spawn interval, spawn a new food
-        if (timer >= spawnInterval) {
+        //update the timer
+        healthyFoodTimer += Time.deltaTime;
+        toxicFoodTimer += Time.deltaTime;
+
+        //if the timer is greater than the spawn interval, spawn a new healthy food
+        if (healthyFoodTimer >= healthyFoodSpawnInterval) {
             //reset the timer
-            timer = 0.0f;
+            healthyFoodTimer = 0.0f;
             //create food on the random position
             Vector3 foodPosition = this.transform.position + new Vector3(
                 Random.Range(-swimLimits.x, swimLimits.x),
                 Random.Range(-swimLimits.y, swimLimits.y),
                 Random.Range(-swimLimits.z, swimLimits.z));
-            Instantiate(foodPrefab, foodPosition, Quaternion.identity);
+            Instantiate(healthyFoodPrefab, foodPosition, Quaternion.identity);
+        }
+
+        //if the timer is greater than the spawn interval, spawn a new toxic food
+        if (toxicFoodTimer >= toxicFoodSpawnInterval) {
+            //reset the timer
+            toxicFoodTimer = 0.0f;
+            //create food on the random position
+            Vector3 foodPosition = this.transform.position + new Vector3(
+                Random.Range(-swimLimits.x, swimLimits.x),
+                Random.Range(-swimLimits.y, swimLimits.y),
+                Random.Range(-swimLimits.z, swimLimits.z));
+            Instantiate(toxicFoodPrefab, foodPosition, Quaternion.identity);
         }
     }
 }
