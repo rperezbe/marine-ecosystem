@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FlockManager : MonoBehaviour {
-    public static FlockManager FM;
+    public static FlockManager FM; //singleton pattern
     public GameObject fishPrefab;
     public GameObject healthyFoodPrefab;
     public GameObject toxicFoodPrefab;
