@@ -24,7 +24,7 @@ public class SliderValueText : MonoBehaviour
     void UpdateText(float value)
     {
         //si el slider es del numero de peces, redondear el valor
-        if (slider.name == "Num_fishes_slider" || slider.name == "Distance_Slider")
+        if (slider.name == "Num_fishes_slider" || slider.name == "Distance_slider" || slider.name == "Nutritional_value_slider" || slider.name == "Nutritional_value_toxic_slider")
             textComp.text = Mathf.Round(value).ToString();
         else
         textComp.text = value.ToString("F2"); //update the text with the value of the slider

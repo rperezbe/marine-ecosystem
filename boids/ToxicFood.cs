@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ToxicFood : Food 
 {
+    void Start()
+    {
+        //we can use the singleton pattern of the FlockManager to get the nutrition value of the food
+        nutritionValue = FlockManager.FM.nutritionValueToxic;
+    }
+
     public override void Consume(Flock consumer) 
     {
         //toxic food doesn't decrease the health but it decreases the energy and the speed of the fish

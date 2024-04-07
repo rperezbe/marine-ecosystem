@@ -24,7 +24,9 @@ public class FlockManager : MonoBehaviour {
     [Range(1.0f, 5.0f)] public float rotationSpeed;
     [Header("Food Settings")]
     public float healthyFoodSpawnInterval  = 0.5f;
+    public int nutritionValueHealthy = 20;
     public float toxicFoodSpawnInterval = 0.5f;
+    public int nutritionValueToxic = 10;
 
     void Start() {
         allFish = new GameObject[numFish];

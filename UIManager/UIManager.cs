@@ -11,6 +11,8 @@ public class UI : MonoBehaviour
     public Slider frequencySliderToxic;
     public Slider neighbourDistanceSlider;
     public Slider numberOfFishInput;
+    public Slider nutritionValueHealthySlider;
+    public Slider nutritionValueToxicSlider;
     //add more UI Components as needed
 
     private void Start()
@@ -31,6 +33,20 @@ public class UI : MonoBehaviour
         frequencySliderToxic.interactable = false;
         neighbourDistanceSlider.interactable = false;*/
         numberOfFishInput.interactable = false;
+        nutritionValueHealthySlider.interactable = false;
+        nutritionValueToxicSlider.interactable = false;
+    }
+
+    //change the nutrition value of the healthy food
+    public void ChangeNutritionValueHealthy(float value)
+    {
+        flockManager.nutritionValueHealthy = (int)value;
+    }
+
+    //change the nutrition value of the toxic food
+    public void ChangeNutritionValueToxic(float value)
+    {
+        flockManager.nutritionValueToxic = (int)value;
     }
 
     //method to change the number of fish

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class HealthyFood : Food
 {
+    void Start()
+    {
+        //we can use the singleton pattern of the FlockManager to get the nutrition value of the food
+        nutritionValue = FlockManager.FM.nutritionValueHealthy;
+    }
+
     public override void Consume(Flock consumer) 
     {
         //increase the energy of the fish by the nutrition value of the food
