@@ -91,6 +91,11 @@ public class Flock : MonoBehaviour {
         //if health is less than 0, the fish will die
         if(health <= 0) {
             Destroy(this.gameObject);
+            
+            //update the counter of the dead fish
+            FlockManager.FM.deadFish++;
+            //update the counter of the actual fish
+            FlockManager.FM.actualFish--;
         }
     }
 
@@ -100,6 +105,13 @@ public class Flock : MonoBehaviour {
         if (foodItem != null) {
             foodItem.Consume(this);
             Destroy(other.gameObject); //destroy the food after the fish consumes it
+            
+            //increase the counters of the consumed food
+            if (foodItem.name.Contains("Toxic")) {
+                FlockManager.FM.toxicFoodConsumed++;
+            } else {
+                FlockManager.FM.healthyFoodConsumed++;
+            }
         }
     }
     

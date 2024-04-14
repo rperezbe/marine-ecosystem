@@ -10,9 +10,13 @@ public class FlockManager : MonoBehaviour {
     public GameObject toxicFoodPrefab;
     private float healthyFoodTimer  = 0.0f; //timer for the food spawn
     private float toxicFoodTimer  = 0.0f;
-    public int numFish = 40;
+    public int numFish = 50;
+    public int deadFish;
+    public int actualFish;
     public GameObject[] allFish; //array of fish to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
+    public int healthyFoodConsumed;
+    public int toxicFoodConsumed;
 
     [Header("Fish Settings")]
     [Range(1.0f, 5.0f)] public float minSize;
@@ -33,6 +37,9 @@ public class FlockManager : MonoBehaviour {
 
         //call to spawn the fishes
         spawnFishes();
+
+        //initialize the actual number of fish
+        actualFish = numFish;
 
         FM = this; //singleton pattern
     }

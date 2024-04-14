@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI : MonoBehaviour
 {
@@ -13,12 +14,27 @@ public class UI : MonoBehaviour
     public Slider numberOfFishInput;
     public Slider nutritionValueHealthySlider;
     public Slider nutritionValueToxicSlider;
+    public TMP_InputField numberTotalOfFishInputTMP;
+    public TMP_InputField numberActualOfFishInputTMP;
+    public TMP_InputField numberOfDeadFishInputTMP;
+    public TMP_InputField numberOfNewBornFishInputTMP;
+    public TMP_InputField numberOfHealthyFoodConsumedInputTMP;
+    public TMP_InputField numberOfToxicFoodConsumedInputTMP;
     //add more UI Components as needed
+
 
     private void Start()
     {
         //start with the simulation disabled
         flockManager.enabled = false;
+
+        //disable the input fields. Use them to show data of the simulation.
+        numberTotalOfFishInputTMP.interactable = false;
+        numberActualOfFishInputTMP.interactable = false;
+        numberOfDeadFishInputTMP.interactable = false;
+        numberOfNewBornFishInputTMP.interactable = false;
+        numberOfHealthyFoodConsumedInputTMP.interactable = false;
+        numberOfToxicFoodConsumedInputTMP.interactable = false;
     }
 
     //method to start the simulation (asigned to the event start simulation button)
@@ -35,6 +51,17 @@ public class UI : MonoBehaviour
         numberOfFishInput.interactable = false;
         nutritionValueHealthySlider.interactable = false;
         nutritionValueToxicSlider.interactable = false;
+
+        //we put the total number of fish at the beginning of the simulation
+        numberTotalOfFishInputTMP.text = flockManager.numFish.ToString();
+    }
+
+    public void Update() {
+        //update the text of the input fields
+        numberActualOfFishInputTMP.text = flockManager.actualFish.ToString();
+        numberOfDeadFishInputTMP.text = flockManager.deadFish.ToString();
+        numberOfHealthyFoodConsumedInputTMP.text = flockManager.healthyFoodConsumed.ToString();
+        numberOfToxicFoodConsumedInputTMP.text = flockManager.toxicFoodConsumed.ToString();
     }
 
     //change the nutrition value of the healthy food
