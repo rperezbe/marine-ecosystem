@@ -8,7 +8,7 @@ public class Flock : MonoBehaviour {
     bool turning = false;
     public float fishSize;
     public int health = 100;
-    public int energy = 80; //we start with 80% energy 
+    public int energy = 70; //we start with 70% energy 
     float healthEnergyTimer = 0.0f; //timer for the health and energy decrease
     public float searchFoodCooldown = 0f; //cooldown for the fish to search for food
     private bool isBabyFish = false;
