@@ -13,14 +13,15 @@ public class FlockManager : MonoBehaviour {
     public int numFish = 50;
     public int deadFish;
     public int actualFish;
+    public int bornFish;
     public GameObject[] allFish; //array of fish to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
     public int healthyFoodConsumed;
     public int toxicFoodConsumed;
 
     [Header("Fish Settings")]
-    [Range(1.0f, 5.0f)] public float minSize;
-    [Range(1.0f, 5.0f)] public float maxSize;
+    [Range(1.0f, 3.0f)] public float minSize;
+    [Range(1.0f, 3.0f)] public float maxSize;
     [Header("Boids Settings")]
     [Range(0.0f, 5.0f)] public float minSpeed;
     [Range(0.0f, 5.0f)] public float maxSpeed;
@@ -47,6 +48,18 @@ public class FlockManager : MonoBehaviour {
     void Update() {
         //call to spawn the food
         spawnFood();
+    }
+
+    //function to spawn the baby fishes
+    public void spawnBabyFishes(Vector3 pos) {
+        //instance of the fish
+        GameObject fish = Instantiate(fishPrefab, pos, Quaternion.identity);
+        //call to the function to be a baby fish
+        fish.GetComponent<Flock>().setBabyFish(true);
+        int index = allFish.Length;
+        allFish[index-1] = fish;
+        //update the number of the actual fish
+        actualFish++;
     }
 
     //function to spawn the fish

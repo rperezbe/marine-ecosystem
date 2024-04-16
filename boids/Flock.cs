@@ -8,16 +8,19 @@ public class Flock : MonoBehaviour {
     bool turning = false;
     public float fishSize;
     public int health = 100;
-    public int energy = 100;
+    public int energy = 80; //we start with 80% energy 
     float healthEnergyTimer = 0.0f; //timer for the health and energy decrease
     public float searchFoodCooldown = 0f; //cooldown for the fish to search for food
+    private bool isBabyFish = false;
 
-    void Start() {
+    void Start() {        
         speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
-        fishSize = Random.Range(FlockManager.FM.minSize, FlockManager.FM.maxSize);
-        transform.localScale = new Vector3(fishSize, fishSize, fishSize);
+        //don't affect the size of the baby fish
+        if(!isBabyFish) {
+            fishSize = Random.Range(FlockManager.FM.minSize, FlockManager.FM.maxSize);
+            transform.localScale = new Vector3(fishSize, fishSize, fishSize);
+        }
     }
-
 
     void Update() {
         //if the fish is out of the bounds of the tank, it will turn around
@@ -96,6 +99,16 @@ public class Flock : MonoBehaviour {
             FlockManager.FM.deadFish++;
             //update the counter of the actual fish
             FlockManager.FM.actualFish--;
+        }
+
+        //if energy is above 95, the fish will reproduce
+        if(energy >= 95) {
+            //reduce the energy of the parent fish due to the reproduction
+            energy = 50;
+            //spawn the baby fish in the same position of the parent fish
+            FlockManager.FM.spawnBabyFishes(transform.position);
+            //update the number of the born fish
+            FlockManager.FM.bornFish++;
         }
     }
 
@@ -198,10 +211,25 @@ public class Flock : MonoBehaviour {
         return speed;
     }*/
 
+    public void setBabyFish(bool isBabyFish) {
+        //set the flag baby fish to true
+        this.isBabyFish = isBabyFish;
+        if(isBabyFish) {
+            //set the energy of the baby fish to 50
+            energy = 50;
+            //set the health of the baby fish to 50
+            health = 50;
+            //set the size of the baby fish to min
+            fishSize = FlockManager.FM.minSize;
+            transform.localScale = new Vector3(fishSize, fishSize, fishSize);
+        }
+    }
+
     public void setEnergy(int newEnergy) {
         //clamp the energy between 0 and 100
         energy = Mathf.Clamp(newEnergy, 0, 100);
     }
+
     public int getEnergy() {
         return energy;
     }

@@ -51,7 +51,6 @@ public class UI : MonoBehaviour
         numberOfFishInput.interactable = false;
         nutritionValueHealthySlider.interactable = false;
         nutritionValueToxicSlider.interactable = false;
-
         //we put the total number of fish at the beginning of the simulation
         numberTotalOfFishInputTMP.text = flockManager.numFish.ToString();
     }
@@ -59,6 +58,7 @@ public class UI : MonoBehaviour
     public void Update() {
         //update the text of the input fields
         numberActualOfFishInputTMP.text = flockManager.actualFish.ToString();
+        numberOfNewBornFishInputTMP.text = flockManager.bornFish.ToString();
         numberOfDeadFishInputTMP.text = flockManager.deadFish.ToString();
         numberOfHealthyFoodConsumedInputTMP.text = flockManager.healthyFoodConsumed.ToString();
         numberOfToxicFoodConsumedInputTMP.text = flockManager.toxicFoodConsumed.ToString();
