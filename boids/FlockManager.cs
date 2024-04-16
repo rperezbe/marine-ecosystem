@@ -10,7 +10,7 @@ public class FlockManager : MonoBehaviour {
     public GameObject toxicFoodPrefab;
     private float healthyFoodTimer  = 0.0f; //timer for the food spawn
     private float toxicFoodTimer  = 0.0f;
-    public int numFish = 50;
+    public int numFish = 20;
     public int deadFish;
     public int actualFish;
     public int bornFish;
