@@ -20,6 +20,9 @@ public class UI : MonoBehaviour
     public TMP_InputField numberOfNewBornFishInputTMP;
     public TMP_InputField numberOfHealthyFoodConsumedInputTMP;
     public TMP_InputField numberOfToxicFoodConsumedInputTMP;
+    public GameObject graphScreen;
+    public Button showGraphButton;
+    public Button showSimulationButton;
     //add more UI Components as needed
 
 
@@ -53,6 +56,22 @@ public class UI : MonoBehaviour
         nutritionValueToxicSlider.interactable = false;
         //we put the total number of fish at the beginning of the simulation
         numberTotalOfFishInputTMP.text = flockManager.numFish.ToString();
+    }
+
+    public void ShowGraph()
+    {
+        //show the graph
+        graphScreen.gameObject.SetActive(true);
+        showGraphButton.gameObject.SetActive(false);
+        showSimulationButton.gameObject.SetActive(true);
+    }
+
+    public void ShowSimulation()
+    {
+        //show the simulation
+        graphScreen.gameObject.SetActive(false);
+        showSimulationButton.gameObject.SetActive(false);
+        showGraphButton.gameObject.SetActive(true);
     }
 
     public void Update() {
