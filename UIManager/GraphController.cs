@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class GraphController : MonoBehaviour
 {
     public Image fishBar;
-    private float maxFish = 1000; //we put this maximum to normalize the value, we can change it
+    private float maxFish = 500; //we put this maximum to normalize the value, we can change it
 
     void Update()
     {
