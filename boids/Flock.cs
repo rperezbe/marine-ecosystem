@@ -56,14 +56,15 @@ public class Flock : MonoBehaviour {
         //decrease the health and energy of the fish every second
         healthEnergyTimer += Time.deltaTime;
         if(healthEnergyTimer >= 1.0f) {
-            health -= 1;
-            energy -= 1;
-
-            //if energy is 0, the health will decrease faster
+            //if energy is 0, the health will decrease faster. 
+            //if not, the energy and health will decrease one unit
             if(energy == 0) {
-                health -= 2;
+                health -= 5;
+            }else{
+                health -= 1;
+                energy -= 1;
             }
-
+            
             //clamp the health and energy between 0 and 100
             health = Mathf.Clamp(health, 0, 100);
             energy = Mathf.Clamp(energy, 0, 100);
