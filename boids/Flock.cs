@@ -59,6 +59,11 @@ public class Flock : MonoBehaviour {
             health -= 1;
             energy -= 1;
 
+            //if energy is 0, the health will decrease faster
+            if(energy == 0) {
+                health -= 2;
+            }
+
             //clamp the health and energy between 0 and 100
             health = Mathf.Clamp(health, 0, 100);
             energy = Mathf.Clamp(energy, 0, 100);
