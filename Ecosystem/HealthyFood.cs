@@ -10,7 +10,7 @@ public class HealthyFood : Food
         nutritionValue = FlockManager.FM.nutritionValueHealthy;
     }
 
-    public override void Consume(Flock consumer) 
+    public override void Consume(Simulation consumer) 
     {
         //increase the energy of the fish by the nutrition value of the food
         //consumer.setEnergy(consumer.getEnergy() + nutritionValue);

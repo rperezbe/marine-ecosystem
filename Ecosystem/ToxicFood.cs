@@ -10,7 +10,7 @@ public class ToxicFood : Food
         nutritionValue = FlockManager.FM.nutritionValueToxic;
     }
 
-    public override void Consume(Flock consumer) 
+    public override void Consume(Simulation consumer) 
     {
         //toxic food doesn't decrease the health but it decreases the energy and the speed of the fish
         //decrease the energy of the fish by the nutrition value of the food

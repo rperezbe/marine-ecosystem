@@ -51,7 +51,7 @@ public class FlockManager : MonoBehaviour {
         //instance of the fish
         GameObject fish = spawner.spawnBabyFish(pos);
         //call to the function to be a baby fish
-        fish.GetComponent<Flock>().setBabyFish(true);
+        fish.GetComponent<Flock>().simulation.setBabyFish(true);
         //add the fish to the array
         int index = allFish.Length;
         allFish[index-1] = fish;
