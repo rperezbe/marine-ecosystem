@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2d803c983e77cc642abcf4b00a307c1c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - fishPrefab: {fileID: 1318662798089844, guid: 06a4036ceebb544e494c30d599b9d2c1, type: 3}
+  - healthyFoodPrefab: {fileID: 4075562540243873051, guid: 36631cc138be5d2478a046f7ac1e2559, type: 3}
+  - toxicFoodPrefab: {fileID: 4075562540243873051, guid: b7045c5fe5ddc04449008b94ab0ba072, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

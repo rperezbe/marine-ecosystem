@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class FlockManager : MonoBehaviour {
     public static FlockManager FM; //singleton pattern
-    public GameObject fishPrefab;
-    public GameObject healthyFoodPrefab;
-    public GameObject toxicFoodPrefab;
-    private float healthyFoodTimer  = 0.0f; //timer for the food spawn
-    private float toxicFoodTimer  = 0.0f;
+    public Spawn spawner; //reference to the spawner
     public int numFish = 20;
     public int deadFish;
     public int actualFish;
@@ -37,7 +33,7 @@ public class FlockManager : MonoBehaviour {
         allFish = new GameObject[numFish];
 
         //call to spawn the fishes
-        spawnFishes();
+        allFish = spawner.spawnFishes(numFish, swimLimits, this.transform.position);
 
         //initialize the actual number of fish
         actualFish = numFish;
@@ -47,63 +43,19 @@ public class FlockManager : MonoBehaviour {
 
     void Update() {
         //call to spawn the food
-        spawnFood();
+        spawner.spawnFood(swimLimits, this.transform.position, healthyFoodSpawnInterval, toxicFoodSpawnInterval);
     }
 
     //function to spawn the baby fishes
     public void spawnBabyFishes(Vector3 pos) {
         //instance of the fish
-        GameObject fish = Instantiate(fishPrefab, pos, Quaternion.identity);
+        GameObject fish = spawner.spawnBabyFish(pos);
         //call to the function to be a baby fish
         fish.GetComponent<Flock>().setBabyFish(true);
+        //add the fish to the array
         int index = allFish.Length;
         allFish[index-1] = fish;
         //update the number of the actual fish
         actualFish++;
-    }
-
-    //function to spawn the fish
-    void spawnFishes() {
-        for (int i = 0; i < numFish; ++i) {
-            Vector3 pos = this.transform.position + new Vector3(
-                Random.Range(-swimLimits.x, swimLimits.x),
-                Random.Range(-swimLimits.y, swimLimits.y),
-                Random.Range(-swimLimits.z, swimLimits.z));
-
-            //instance of the fish
-            GameObject fish = Instantiate(fishPrefab, pos, Quaternion.identity);
-            allFish[i] = fish;
-        }
-    }
-
-    //function to spawn the food
-    void spawnFood() {
-        //update the timer
-        healthyFoodTimer += Time.deltaTime;
-        toxicFoodTimer += Time.deltaTime;
-
-        //if the timer is greater than the spawn interval, spawn a new healthy food
-        if (healthyFoodTimer >= healthyFoodSpawnInterval) {
-            //reset the timer
-            healthyFoodTimer = 0.0f;
-            //create food on the random position
-            Vector3 foodPosition = this.transform.position + new Vector3(
-                Random.Range(-swimLimits.x, swimLimits.x),
-                Random.Range(-swimLimits.y, swimLimits.y),
-                Random.Range(-swimLimits.z, swimLimits.z));
-            Instantiate(healthyFoodPrefab, foodPosition, Quaternion.identity);
-        }
-
-        //if the timer is greater than the spawn interval, spawn a new toxic food
-        if (toxicFoodTimer >= toxicFoodSpawnInterval) {
-            //reset the timer
-            toxicFoodTimer = 0.0f;
-            //create food on the random position
-            Vector3 foodPosition = this.transform.position + new Vector3(
-                Random.Range(-swimLimits.x, swimLimits.x),
-                Random.Range(-swimLimits.y, swimLimits.y),
-                Random.Range(-swimLimits.z, swimLimits.z));
-            Instantiate(toxicFoodPrefab, foodPosition, Quaternion.identity);
-        }
     }
 }
