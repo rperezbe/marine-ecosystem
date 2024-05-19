@@ -53,56 +53,67 @@ public class Flock : MonoBehaviour {
 
     //flocking algorithm rules
     void ApplyRules() {
-        GameObject[] gos;
-        gos = FlockManager.FM.allFish;
-        Vector3 vCentre = Vector3.zero;
-        Vector3 vAvoid = Vector3.zero;
-        //float gSpeed = 0.01f;
-        float mDistance;
-        int groupSize = 0;
-
-        //temporal list to store the valid fish who are still alive
-        List<GameObject> validFish = new List<GameObject>();
-
-        //filter the GameObjects that are still alive
-        foreach (GameObject go in gos) {
-            if (go != null && go != this.gameObject) {
-                validFish.Add(go);
+        List<GameObject> neighbors = new List<GameObject>();
+        
+        //find the neighbors of the fish within the neighbour distance set in the FlockManager
+        foreach (GameObject go in FlockManager.FM.allFish) {
+            if (go != null && go != gameObject && Vector3.Distance(transform.position, go.transform.position) <= FlockManager.FM.neighbourDistance) {
+                neighbors.Add(go);
             }
         }
 
-        //calculate the center of the group and the distance between the fishes
-        foreach (GameObject go in validFish) {
-            if (go != this.gameObject) {
-                mDistance = Vector3.Distance(go.transform.position, this.transform.position);
-                //if the distance between the fishes is less than the neighbour distance, the fish will be part of the group
-                if (mDistance <= FlockManager.FM.neighbourDistance) {
-                    vCentre += go.transform.position;
-                    groupSize++;
-                    //if the distance between the fishes is less than 1, the fish will avoid the other fish
-                    if (mDistance < 1.0f) {
-                        vAvoid = vAvoid + (this.transform.position - go.transform.position);
-                    }
-                    Flock anotherFlock = go.GetComponent<Flock>();
-                    //gSpeed = gSpeed + anotherFlock.speed;
-                }
-            }
-        }
+        //calculate the separation, cohesion and alignment forces
+        Vector3 separation = CalculateSeparation(neighbors, 1.0f); //you can adjust the separation distance
+        Vector3 cohesion = CalculateCohesion(neighbors);
+        Vector3 alignment = CalculateAlignment(neighbors);
 
-        //if the fish is part of a group, it will move towards the center of the group
-        if (groupSize > 0) {
-            vCentre = vCentre / groupSize;
-            //speed = gSpeed / groupSize;
-            if (speed > FlockManager.FM.maxSpeed) {
-                speed = FlockManager.FM.maxSpeed;
-            }
-            Vector3 direction = (vCentre + vAvoid) - transform.position;
-            if (direction != Vector3.zero) {
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    Quaternion.LookRotation(direction),
-                    FlockManager.FM.rotationSpeed * Time.deltaTime);
-            }
+        //combine the forces to get the move direction
+        Vector3 moveDirection = separation + cohesion + alignment;
+
+        //rotate the fish towards the move direction
+        if (moveDirection != Vector3.zero) {
+            Quaternion desiredRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, FlockManager.FM.rotationSpeed * Time.deltaTime);
         }
+        
+        //move the fish forward in the move direction
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
+
+
+    private Vector3 CalculateSeparation(List<GameObject> neighbors, float minDistance) {
+        Vector3 separationSum = Vector3.zero;
+        foreach (GameObject neighbor in neighbors) {
+            Vector3 diff = transform.position - neighbor.transform.position;
+            float dist = diff.magnitude;
+            if (dist < minDistance && dist > 0) {
+                separationSum += diff.normalized / dist; //normalized diff vector divided by the distance
+            }
+        }
+        return separationSum;
+    }
+
+    private Vector3 CalculateCohesion(List<GameObject> neighbors) {
+        Vector3 centerMass = Vector3.zero;
+        if (neighbors.Count == 0) return centerMass;
+
+        foreach (GameObject neighbor in neighbors) {
+            centerMass += neighbor.transform.position;
+        }
+        centerMass /= neighbors.Count;
+        return (centerMass - transform.position).normalized; //direction from the fish to the center of mass
+    }
+
+    private Vector3 CalculateAlignment(List<GameObject> neighbors) {
+        Vector3 averageVelocity = Vector3.zero;
+        if (neighbors.Count == 0) return averageVelocity;
+
+        foreach (GameObject neighbor in neighbors) {
+            Flock flock = neighbor.GetComponent<Flock>();
+            if (flock != null) averageVelocity += flock.speed * neighbor.transform.forward;
+        }
+        averageVelocity /= neighbors.Count;
+        return averageVelocity.normalized;
+    }
+
 }
