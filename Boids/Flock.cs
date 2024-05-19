@@ -63,9 +63,9 @@ public class Flock : MonoBehaviour {
         }
 
         //calculate the separation, cohesion and alignment forces
-        Vector3 separation = CalculateSeparation(neighbors, 1.0f); //you can adjust the separation distance
-        Vector3 cohesion = CalculateCohesion(neighbors);
-        Vector3 alignment = CalculateAlignment(neighbors);
+        Vector3 separation = Separation(neighbors, 1.0f); //you can adjust the separation distance
+        Vector3 cohesion = Cohesion(neighbors);
+        Vector3 alignment = Alignment(neighbors);
 
         //combine the forces to get the move direction
         Vector3 moveDirection = separation + cohesion + alignment;
@@ -80,20 +80,20 @@ public class Flock : MonoBehaviour {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-
-    private Vector3 CalculateSeparation(List<GameObject> neighbors, float minDistance) {
+    private Vector3 Separation(List<GameObject> neighbors, float minDistance) {
         Vector3 separationSum = Vector3.zero;
         foreach (GameObject neighbor in neighbors) {
             Vector3 diff = transform.position - neighbor.transform.position;
-            float dist = diff.magnitude;
+            float dist = diff.magnitude; //euclidean distance between the fish and the neighbor
             if (dist < minDistance && dist > 0) {
-                separationSum += diff.normalized / dist; //normalized diff vector divided by the distance
+                //the closer the neighbor, the stronger the separation force
+                separationSum += diff / (dist * dist);
             }
         }
         return separationSum;
     }
 
-    private Vector3 CalculateCohesion(List<GameObject> neighbors) {
+    private Vector3 Cohesion(List<GameObject> neighbors) {
         Vector3 centerMass = Vector3.zero;
         if (neighbors.Count == 0) return centerMass;
 
@@ -104,7 +104,7 @@ public class Flock : MonoBehaviour {
         return (centerMass - transform.position).normalized; //direction from the fish to the center of mass
     }
 
-    private Vector3 CalculateAlignment(List<GameObject> neighbors) {
+    private Vector3 Alignment(List<GameObject> neighbors) {
         Vector3 averageVelocity = Vector3.zero;
         if (neighbors.Count == 0) return averageVelocity;
 
