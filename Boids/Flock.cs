@@ -97,22 +97,31 @@ public class Flock : MonoBehaviour {
         Vector3 centerMass = Vector3.zero;
         if (neighbors.Count == 0) return centerMass;
 
+        //sum the positions of the neighbors
         foreach (GameObject neighbor in neighbors) {
             centerMass += neighbor.transform.position;
         }
+        //calculate the center of mass
         centerMass /= neighbors.Count;
-        return (centerMass - transform.position).normalized; //direction from the fish to the center of mass
+        //normalize the vector to get the direction to the center of mass
+        return (centerMass - transform.position).normalized;
     }
 
     private Vector3 Alignment(List<GameObject> neighbors) {
         Vector3 averageVelocity = Vector3.zero;
         if (neighbors.Count == 0) return averageVelocity;
 
+        //sum the velocities of the neighbors
         foreach (GameObject neighbor in neighbors) {
             Flock flock = neighbor.GetComponent<Flock>();
-            if (flock != null) averageVelocity += flock.speed * neighbor.transform.forward;
+            if (flock != null){
+                //calculate the average velocity of the neighbors
+                averageVelocity += flock.speed * neighbor.transform.forward;
+            } 
         }
+        //calculate the average velocity
         averageVelocity /= neighbors.Count;
+        //normalize the vector 
         return averageVelocity.normalized;
     }
 
