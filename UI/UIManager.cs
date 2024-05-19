@@ -104,7 +104,7 @@ public class UI : MonoBehaviour
     //method to change the distance between the neighbours
     public void ChangeNeighbourDistance(float value)
     {
-        flockManager.neighbourDistance = value;
+        flockManager.maxNeighborDistance = value;
     }
 
     //method to change the frequency of the food spawn

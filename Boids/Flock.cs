@@ -56,9 +56,9 @@ public class Flock : MonoBehaviour {
         List<GameObject> neighbors = new List<GameObject>();
         
         //find the neighbors of the fish within the neighbour distance set in the FlockManager
-        foreach (GameObject go in FlockManager.FM.allFish) {
-            if (go != null && go != gameObject && Vector3.Distance(transform.position, go.transform.position) <= FlockManager.FM.neighbourDistance) {
-                neighbors.Add(go);
+        foreach (GameObject neighbor in FlockManager.FM.allFish) {
+            if (neighbor != null && Vector3.Distance(transform.position, neighbor.transform.position) <= FlockManager.FM.maxNeighborDistance) {
+                neighbors.Add(neighbor);
             }
         }
 

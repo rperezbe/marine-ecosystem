@@ -21,7 +21,7 @@ public class FlockManager : MonoBehaviour {
     [Header("Boids Settings")]
     [Range(0.0f, 5.0f)] public float minSpeed;
     [Range(0.0f, 5.0f)] public float maxSpeed;
-    [Range(1.0f, 10.0f)] public float neighbourDistance;
+    [Range(1.0f, 10.0f)] public float maxNeighborDistance;
     [Range(1.0f, 5.0f)] public float rotationSpeed;
     [Header("Food Settings")]
     public float healthyFoodSpawnInterval  = 0.5f;
