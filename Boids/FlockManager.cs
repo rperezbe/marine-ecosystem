@@ -58,4 +58,14 @@ public class FlockManager : MonoBehaviour {
         //update the number of the actual fish
         actualFish++;
     }
+
+    void OnDrawGizmos() {
+        // Establece el color del Gizmo
+        Gizmos.color = Color.blue;  // Puedes cambiar el color a cualquier otro que prefieras
+
+        // Dibuja un cubo en la posición del FlockManager con el tamaño definido por swimLimits
+        Gizmos.DrawWireCube(transform.position, swimLimits * 2.0f);
+    }
+
+
 }
