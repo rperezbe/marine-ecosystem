@@ -43,21 +43,22 @@ public class Simulation : MonoBehaviour {
         }
 
         //search for food if the energy and the cooldown are ok
-if (energy < Random.Range(70, 81) && searchFoodCooldown <= 0) {
-    closestFood = FindClosestFood();
-    if (closestFood != null){
-        Vector3 directionToFood = (closestFood.transform.position - transform.position).normalized;
-        //we can adjust the strength of the attraction to food to control how much affect it has on the fish
-        float distanceToFood = Vector3.Distance(transform.position, closestFood.transform.position);
-        //the max distance at which the food will have full attraction strength
-        float maxAttractionDistance = 1f;
-        //we use clamp01 to make sure the value is between 0 and 1
-        float foodAttractionStrength = Mathf.Clamp01(1f - distanceToFood / maxAttractionDistance); 
-        Vector3 newDirection = Vector3.Lerp(transform.forward, directionToFood, foodAttractionStrength).normalized;
-        transform.rotation = Quaternion.LookRotation(newDirection);
-        this.transform.Translate(0.0f, 0.0f, associatedFlock.speed * Time.deltaTime);
-    }
-}
+        if (energy < Random.Range(70, 81) && searchFoodCooldown <= 0) {
+            closestFood = FindClosestFood();
+            if (closestFood != null){
+                Vector3 directionToFood = (closestFood.transform.position - transform.position).normalized;
+                //we can adjust the strength of the attraction to food to control how much affect it has on the fish
+                float distanceToFood = Vector3.Distance(transform.position, closestFood.transform.position);
+                //the max distance at which the food will have full attraction strength
+                float maxAttractionDistance = 1f;
+                //we use clamp01 to make sure the value is between 0 and 1
+                float foodAttractionStrength = Mathf.Clamp01(1f - distanceToFood / maxAttractionDistance); 
+                //we use Lerp to smoothly change the direction of the fish towards the food 
+                Vector3 newDirection = Vector3.Lerp(transform.forward, directionToFood, foodAttractionStrength).normalized;
+                transform.rotation = Quaternion.LookRotation(newDirection);
+                this.transform.Translate(0.0f, 0.0f, associatedFlock.speed * Time.deltaTime);
+            }
+        }
 
         //influence speed from min speed to max speed depending on the energy
         associatedFlock.speed = Mathf.Lerp(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed, (float)energy / 100);
