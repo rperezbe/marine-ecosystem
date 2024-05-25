@@ -51,7 +51,7 @@ public class Spawn : MonoBehaviour {
             Instantiate(healthyFoodPrefab, foodPosition, Quaternion.identity);
         }
 
-        // Si el temporizador supera el intervalo, generar nueva comida tóxica.
+        //if the timer is greater than the spawn interval, spawn a new toxic food
         if (toxicFoodTimer >= toxicFoodInterval) {
             toxicFoodTimer = 0.0f;
             //create food on the random position
