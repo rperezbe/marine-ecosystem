@@ -7,6 +7,7 @@ public class HealthyFood : Food
     void Start()
     {
         //we can use the singleton pattern of the FlockManager to get the nutrition value of the food
+        //if we want to change the nutrition value during the simulation, we can do it on the consume method
         nutritionValue = FlockManager.FM.nutritionValueHealthy;
     }
 
