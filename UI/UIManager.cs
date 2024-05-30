@@ -23,6 +23,9 @@ public class UI : MonoBehaviour
     public GameObject graphScreen;
     public Button showGraphButton;
     public Button showSimulationButton;
+    public TextMeshProUGUI actualFishText;
+    public TextMeshProUGUI deadFishText;
+    public TextMeshProUGUI bornFishText;
     //add more UI Components as needed
 
 
@@ -38,6 +41,9 @@ public class UI : MonoBehaviour
         numberOfNewBornFishInputTMP.interactable = false;
         numberOfHealthyFoodConsumedInputTMP.interactable = false;
         numberOfToxicFoodConsumedInputTMP.interactable = false;
+
+        //show graph button is disabled at the beginning
+        showGraphButton.interactable = false;
     }
 
     //method to start the simulation (asigned to the event start simulation button)
@@ -56,6 +62,9 @@ public class UI : MonoBehaviour
         nutritionValueToxicSlider.interactable = false;
         //we put the total number of fish at the beginning of the simulation
         numberTotalOfFishInputTMP.text = flockManager.numFish.ToString();
+
+        //show graph button is enabled
+        showGraphButton.interactable = true;
     }
 
     public void ShowGraph()
@@ -64,6 +73,17 @@ public class UI : MonoBehaviour
         graphScreen.gameObject.SetActive(true);
         showGraphButton.gameObject.SetActive(false);
         showSimulationButton.gameObject.SetActive(true);
+
+        //change the text colors of the text input fields
+        numberActualOfFishInputTMP.textComponent.color = HexToColor("517CE5");
+        numberOfDeadFishInputTMP.textComponent.color = HexToColor("EA8383");
+        numberOfNewBornFishInputTMP.textComponent.color = HexToColor("74E07F");
+
+        //change the text color of the text components
+        actualFishText.color = HexToColor("517CE5");
+        deadFishText.color = HexToColor("EA8383");
+        bornFishText.color = HexToColor("74E07F");
+
     }
 
     public void ShowSimulation()
@@ -72,6 +92,16 @@ public class UI : MonoBehaviour
         graphScreen.gameObject.SetActive(false);
         showSimulationButton.gameObject.SetActive(false);
         showGraphButton.gameObject.SetActive(true);
+
+        //change the text colors of the text input fields
+        numberActualOfFishInputTMP.textComponent.color = Color.white;
+        numberOfDeadFishInputTMP.textComponent.color = Color.white;
+        numberOfNewBornFishInputTMP.textComponent.color = Color.white;
+
+        //change the text color of the text components
+        actualFishText.color = Color.white;
+        deadFishText.color = Color.white;
+        bornFishText.color = Color.white;
     }
 
     public void Update() {
@@ -117,6 +147,14 @@ public class UI : MonoBehaviour
     public void ChangeFoodSpawnFrequencyToxic(float value)
     {
         flockManager.toxicFoodSpawnInterval = value;
+    }
+
+    Color HexToColor(string hex)
+    {
+        byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+        byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+        byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+        return new Color(r / 255f, g / 255f, b / 255f);
     }
 
 }
