@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ToxicFood : Food 
 {
-    public float fallSpeed = 0.5f;
+    public float fallSpeed = 0.3f;
 
     void Start()
     {
