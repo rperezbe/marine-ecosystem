@@ -5,25 +5,27 @@ using TMPro;
 
 public class GraphController : MonoBehaviour
 {
-    public Image fishBar;
-    public Image fishBornBar;
-    public Image fishDeadBar;
+    public Image healthyFoodConsumedBar;
+    public Image toxicFoodConsumedBar;
     public Image lineGraph;
-    public TextMeshProUGUI maxNumber;
-    public TextMeshProUGUI mediumNumber;
+    public TextMeshProUGUI maxNumberBar;
+    public TextMeshProUGUI mediumNumberBar;
+    public TextMeshProUGUI maxNumberLine;
+    public TextMeshProUGUI mediumNumberLine;
 
     private Texture2D graphTexture;
     private List<float> fishCounts = new List<float>();
     private List<float> fishBornCounts = new List<float>();
     private List<float> fishDeadCounts = new List<float>();
-    private float maxFish = 100;
+    private float maxFood = 100;
+    private float maxFish = 50;
 
     private float updateInterval = 1.0f;
     private float timeSinceLastUpdate = 0;
 
     void Start()
     {
-        graphTexture = new Texture2D(150, 150);
+        graphTexture = new Texture2D(280, 100);
         graphTexture.filterMode = FilterMode.Point;
         lineGraph.sprite = Sprite.Create(graphTexture, new Rect(0, 0, graphTexture.width, graphTexture.height), new Vector2(0.5f, 0.5f), 100.0f, 0, SpriteMeshType.FullRect);
         ClearGraph();
@@ -42,38 +44,58 @@ public class GraphController : MonoBehaviour
 
     void UpdateGraph()
     {
+        //assign the maxNumber text value to the maxFood
+        maxNumberBar.text = maxFood.ToString();
+        //assign the mediumNumber text value to the half of the maxFood
+        mediumNumberBar.text = (maxFood / 2).ToString();
+
         //assign the maxNumber text value to the maxFish
-        maxNumber.text = maxFish.ToString();
+        maxNumberLine.text = maxFish.ToString();
         //assign the mediumNumber text value to the half of the maxFish
-        mediumNumber.text = (maxFish / 2).ToString();
+        mediumNumberLine.text = (maxFish / 2).ToString();
 
         if (FlockManager.FM == null)
         {
             return;
         }
 
-        //update the graph with the actual number of fish
+        //update the graph with the actual number of consumed food
+        float currentHealthyFood = FlockManager.FM.healthyFoodConsumed;
+        float normalizedHealthyFood = currentHealthyFood / maxFood;
+        healthyFoodConsumedBar.fillAmount = normalizedHealthyFood;
+        
+        //update the graph with the actual number of consumed toxic food
+        float currentToxicFood = FlockManager.FM.toxicFoodConsumed;
+        float normalizedToxicFood = currentToxicFood / maxFood;
+        toxicFoodConsumedBar.fillAmount = normalizedToxicFood;
+        
+        if (currentHealthyFood > maxFood || currentToxicFood > maxFood)
+        {
+            maxFood *= 2;  //adjust max scale of food as needed
+        }
+
         float currentFish = FlockManager.FM.actualFish;
         float normalizedFish = currentFish / maxFish;
-        fishBar.fillAmount = normalizedFish;
+        // fishBar.fillAmount = normalizedFish;
         UpdateDataList(fishCounts, normalizedFish);
 
         float currentFishBorn = FlockManager.FM.bornFish;
         float normalizedFishBorn = currentFishBorn / maxFish;
-        fishBornBar.fillAmount = normalizedFishBorn;
+        // fishBornBar.fillAmount = normalizedFishBorn;
         UpdateDataList(fishBornCounts, normalizedFishBorn);
 
         float currentFishDead = FlockManager.FM.deadFish;
         float normalizedFishDead = currentFishDead / maxFish;
-        fishDeadBar.fillAmount = normalizedFishDead;
+        //fishDeadBar.fillAmount = normalizedFishDead;
         UpdateDataList(fishDeadCounts, normalizedFishDead);
 
         if (currentFish > maxFish || currentFishBorn > maxFish || currentFishDead > maxFish)
         {
-            maxFish *= 2;  //adjust max scale as needed
+            maxFish *= 2;  //adjust max scale of fishes as needed
         }
 
         DrawLineGraph();
+
     }
 
     void ClearGraph()
