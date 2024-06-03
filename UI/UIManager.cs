@@ -26,6 +26,8 @@ public class UI : MonoBehaviour
     public TextMeshProUGUI actualFishText;
     public TextMeshProUGUI deadFishText;
     public TextMeshProUGUI bornFishText;
+    public TextMeshProUGUI healthyFoodText;
+    public TextMeshProUGUI toxicFoodText;
     //add more UI Components as needed
 
 
@@ -75,14 +77,18 @@ public class UI : MonoBehaviour
         showSimulationButton.gameObject.SetActive(true);
 
         //change the text colors of the text input fields
-        numberActualOfFishInputTMP.textComponent.color = HexToColor("517CE5");
-        numberOfDeadFishInputTMP.textComponent.color = HexToColor("EA8383");
-        numberOfNewBornFishInputTMP.textComponent.color = HexToColor("74E07F");
+        numberActualOfFishInputTMP.textComponent.color = HexToColor("7A99E5");
+        numberOfDeadFishInputTMP.textComponent.color = HexToColor("000000");
+        numberOfNewBornFishInputTMP.textComponent.color = HexToColor("DECF7B");
+        numberOfHealthyFoodConsumedInputTMP.textComponent.color = HexToColor("74E07F");
+        numberOfToxicFoodConsumedInputTMP.textComponent.color = HexToColor("EA8383");
 
         //change the text color of the text components
-        actualFishText.color = HexToColor("517CE5");
-        deadFishText.color = HexToColor("EA8383");
-        bornFishText.color = HexToColor("74E07F");
+        actualFishText.color = HexToColor("7A99E5");
+        deadFishText.color = HexToColor("000000");
+        bornFishText.color = HexToColor("DECF7B");
+        healthyFoodText.color = HexToColor("74E07F");
+        toxicFoodText.color = HexToColor("EA8383");
 
     }
 
@@ -97,11 +103,15 @@ public class UI : MonoBehaviour
         numberActualOfFishInputTMP.textComponent.color = Color.white;
         numberOfDeadFishInputTMP.textComponent.color = Color.white;
         numberOfNewBornFishInputTMP.textComponent.color = Color.white;
+        numberOfHealthyFoodConsumedInputTMP.textComponent.color = Color.white;
+        numberOfToxicFoodConsumedInputTMP.textComponent.color = Color.white;
 
         //change the text color of the text components
         actualFishText.color = Color.white;
         deadFishText.color = Color.white;
         bornFishText.color = Color.white;
+        healthyFoodText.color = Color.white;
+        toxicFoodText.color = Color.white;
     }
 
     public void Update() {

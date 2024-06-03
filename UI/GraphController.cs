@@ -123,9 +123,9 @@ public class GraphController : MonoBehaviour
         {
             int x0 = (i - 1) * width / count;
             int x1 = i * width / count;
-            DrawLine(x0, fishCounts[i - 1] * height, x1, fishCounts[i] * height, HexToColor("517CE5"));
-            DrawLine(x0, fishBornCounts[i - 1] * height, x1, fishBornCounts[i] * height, HexToColor("74E07F"));
-            DrawLine(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("EA8383"));
+            DrawLine(x0, fishCounts[i - 1] * height, x1, fishCounts[i] * height, HexToColor("7A99E5"));
+            DrawLine(x0, fishBornCounts[i - 1] * height, x1, fishBornCounts[i] * height, HexToColor("DECF7B"));
+            DrawLine(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("000000"));
         }
         graphTexture.Apply();
     }
