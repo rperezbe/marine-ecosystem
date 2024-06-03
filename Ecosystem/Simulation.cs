@@ -9,8 +9,6 @@ public class Simulation : MonoBehaviour {
     public float searchFoodCooldown = 3.0f; //cooldown for the fish to search for food, starts in 3 seconds
     public bool isBabyFish = false;
     public GameObject closestFood = null;  // Almacena la referencia al alimento más cercano
-
-
     public Flock associatedFlock;
 
     void Start() {

@@ -47,5 +47,8 @@ public class HealthyFood : Food
         //consumer.setSpeed(consumer.getSpeed() + 0.1f);
         //here we don't have cooldown for the fish
         consumer.searchFoodCooldown = 0f; //0 seconds cooldown
+
+        //make the fish size bigger by 0.01 without exceeding the max size
+        consumer.associatedFlock.fishSize = Mathf.Clamp(consumer.associatedFlock.fishSize + 0.1f, FlockManager.FM.minSize, FlockManager.FM.maxSize);
     }
 }
