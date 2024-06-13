@@ -147,6 +147,12 @@ public class UI : MonoBehaviour
         flockManager.maxNeighborDistance = value;
     }
 
+    //method to change the min separation distance
+    public void ChangeMinSeparation(float value)
+    {
+        flockManager.separationDistance = value;
+    }
+
     //method to change the frequency of the food spawn
     public void ChangeFoodSpawnFrequencyHealthy(float value)
     {

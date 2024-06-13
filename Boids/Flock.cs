@@ -63,7 +63,7 @@ public class Flock : MonoBehaviour {
         }
 
         //calculate the separation, cohesion and alignment forces
-        Vector3 separation = Separation(neighbors, 1.0f); //you can adjust the separation distance
+        Vector3 separation = Separation(neighbors, FlockManager.FM.separationDistance); //you can adjust the separation distance
         Vector3 cohesion = Cohesion(neighbors);
         Vector3 alignment = Alignment(neighbors);
 
@@ -125,4 +125,20 @@ public class Flock : MonoBehaviour {
         return averageVelocity.normalized;
     }
 
+    void OnDrawGizmos() {
+        if (FlockManager.FM == null || FlockManager.FM.allFish == null) return;
+
+        // Gizmos.color = Color.yellow;  // Puedes cambiar el color para diferenciar la esfera
+        // Gizmos.DrawWireSphere(transform.position, FlockManager.FM.maxNeighborDistance);
+
+        Gizmos.color = Color.green;
+
+        foreach (GameObject fish in FlockManager.FM.allFish) {
+            if (fish != this.gameObject && Vector3.Distance(transform.position, fish.transform.position) <= FlockManager.FM.maxNeighborDistance) {
+                Gizmos.DrawLine(transform.position, fish.transform.position);
+            }
+        }
+    }
+
 }
+
