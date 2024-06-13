@@ -123,35 +123,49 @@ public class GraphController : MonoBehaviour
         {
             int x0 = (i - 1) * width / count;
             int x1 = i * width / count;
-            DrawLine(x0, fishCounts[i - 1] * height, x1, fishCounts[i] * height, HexToColor("7A99E5"));
-            DrawLine(x0, fishBornCounts[i - 1] * height, x1, fishBornCounts[i] * height, HexToColor("DECF7B"));
-            DrawLine(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("000000"));
+            BresenhamError(x0, fishCounts[i - 1] * height, x1, fishCounts[i] * height, HexToColor("7A99E5"));
+            BresenhamError(x0, fishBornCounts[i - 1] * height, x1, fishBornCounts[i] * height, HexToColor("DECF7B"));
+            BresenhamError(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("000000"));
         }
         graphTexture.Apply();
     }
 
-    void DrawLine(int x0, float y0, int x1, float y1, Color color)
+    void BresenhamError(int x0, float y0, int x1, float y1, Color color)
     {
-        //implement a simple line drawing algorithm (Bresenham's line algorithm)
+        //bresenham's line algorithm
+        //difference between the initial and final y coordinates
         int dy = (int)(y1 - y0);
+        //difference between the initial and final x coordinates
         int dx = x1 - x0;
+        //evaluate if the line is going up or down
         int step = dy < 0 ? -1 : 1;
+        //duplicate the absolute value of the difference between the initial and final y coordinates
         dy = Mathf.Abs(dy) * 2;
+        //duplicate the difference between the initial and final x coordinates
         dx *= 2;
 
+        //initialize the error
         float fraction = 0;
 
+        //set the pixel in the initial coordinates
         graphTexture.SetPixel(x0, (int)y0, color);
 
+        //while until the initial x coordinate is equal to the final x coordinate
         while (x0 != x1)
         {
+            //evaluate if we need to increment or decrement the y coordinate
             if (fraction >= 0)
             {
+                //increment or decrement the y coordinate
                 y0 += step;
+                //adjust the error
                 fraction -= dx;
             }
+            //if not, increment the x coordinate advancing to the final x coordinate
             x0++;
+            //adjust the error
             fraction += dy;
+            //set the pixel in the calculated coordinates
             graphTexture.SetPixel(x0, (int)y0, color);
         }
     }
