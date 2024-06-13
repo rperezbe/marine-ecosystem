@@ -2,21 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class GraphController : MonoBehaviour
 {
     public Image healthyFoodConsumedBar;
     public Image toxicFoodConsumedBar;
     public Image lineGraph;
+    public Image lineGraphFood;
     public TextMeshProUGUI maxNumberBar;
     public TextMeshProUGUI mediumNumberBar;
     public TextMeshProUGUI maxNumberLine;
     public TextMeshProUGUI mediumNumberLine;
+    public Image actualFishBar;
+    public Image fishBornBar;
+    public Image fishDeadBar;
 
     private Texture2D graphTexture;
+    private Texture2D foodGraphTexture;
     private List<float> fishCounts = new List<float>();
     private List<float> fishBornCounts = new List<float>();
     private List<float> fishDeadCounts = new List<float>();
+    private List<float> healthyFoodCounts = new List<float>();
+    private List<float> toxicFoodCounts = new List<float>();
     private float maxFood = 100;
     private float maxFish = 50;
 
@@ -28,7 +36,12 @@ public class GraphController : MonoBehaviour
         graphTexture = new Texture2D(280, 100);
         graphTexture.filterMode = FilterMode.Point; //important to avoid blurring
         lineGraph.sprite = Sprite.Create(graphTexture, new Rect(0, 0, graphTexture.width, graphTexture.height), new Vector2(0.5f, 0.5f), 100.0f, 0, SpriteMeshType.FullRect);
-        ClearGraph();
+        ClearGraph(graphTexture);
+
+        foodGraphTexture = new Texture2D(280, 100);
+        foodGraphTexture.filterMode = FilterMode.Point; //important to avoid blurring
+        lineGraphFood.sprite = Sprite.Create(foodGraphTexture, new Rect(0, 0, foodGraphTexture.width, foodGraphTexture.height), new Vector2(0.5f, 0.5f), 100.0f, 0, SpriteMeshType.FullRect);
+        ClearGraph(foodGraphTexture);
     }
 
 
@@ -63,12 +76,14 @@ public class GraphController : MonoBehaviour
         float currentHealthyFood = FlockManager.FM.healthyFoodConsumed;
         float normalizedHealthyFood = currentHealthyFood / maxFood;
         healthyFoodConsumedBar.fillAmount = normalizedHealthyFood;
+        UpdateDataList(healthyFoodCounts, normalizedHealthyFood);
         
         //update the graph with the actual number of consumed toxic food
         float currentToxicFood = FlockManager.FM.toxicFoodConsumed;
         float normalizedToxicFood = currentToxicFood / maxFood;
         toxicFoodConsumedBar.fillAmount = normalizedToxicFood;
-        
+        UpdateDataList(toxicFoodCounts, normalizedToxicFood);
+
         if (currentHealthyFood > maxFood || currentToxicFood > maxFood)
         {
             maxFood *= 2;  //adjust max scale of food as needed
@@ -78,16 +93,19 @@ public class GraphController : MonoBehaviour
         float normalizedFish = currentFish / maxFish;
         // fishBar.fillAmount = normalizedFish;
         UpdateDataList(fishCounts, normalizedFish);
+        actualFishBar.fillAmount = normalizedFish;
 
         float currentFishBorn = FlockManager.FM.bornFish;
         float normalizedFishBorn = currentFishBorn / maxFish;
         // fishBornBar.fillAmount = normalizedFishBorn;
         UpdateDataList(fishBornCounts, normalizedFishBorn);
+        fishBornBar.fillAmount = normalizedFishBorn;
 
         float currentFishDead = FlockManager.FM.deadFish;
         float normalizedFishDead = currentFishDead / maxFish;
         //fishDeadBar.fillAmount = normalizedFishDead;
         UpdateDataList(fishDeadCounts, normalizedFishDead);
+        fishDeadBar.fillAmount = normalizedFishDead;
 
         if (currentFish > maxFish || currentFishBorn > maxFish || currentFishDead > maxFish)
         {
@@ -98,39 +116,70 @@ public class GraphController : MonoBehaviour
 
     }
 
-    void ClearGraph()
+    void ClearGraph(Texture2D texture)
     {
-        for (int x = 0; x < graphTexture.width; x++)
+        for (int x = 0; x < texture.width; x++)
         {
-            for (int y = 0; y < graphTexture.height; y++)
+            for (int y = 0; y < texture.height; y++)
             {
-                graphTexture.SetPixel(x, y, Color.clear);
+                texture.SetPixel(x, y, Color.clear);
             }
         }
-        graphTexture.Apply();
+        texture.Apply();
     }
 
     void DrawLineGraph()
     {
-        ClearGraph(); //clear the previous frame
+        DrawFishGraph(graphTexture, fishCounts, fishBornCounts, fishDeadCounts);
+        DrawFoodGraph(foodGraphTexture, healthyFoodCounts, toxicFoodCounts);
+    }
 
-        //ensure you scale x coordinates to fit the graph width
-        int width = graphTexture.width;
-        int height = graphTexture.height;
-        int count = fishCounts.Count;
+    void DrawFishGraph(Texture2D texture, List<float> fish, List<float> born, List<float> dead)
+    {
+        ClearGraph(texture);
+
+        int width = texture.width;
+        int height = texture.height;
+        int count = fish.Count;
 
         for (int i = 1; i < count; i++)
         {
             int x0 = (i - 1) * width / count;
             int x1 = i * width / count;
-            BresenhamError(x0, fishCounts[i - 1] * height, x1, fishCounts[i] * height, HexToColor("7A99E5"));
-            BresenhamError(x0, fishBornCounts[i - 1] * height, x1, fishBornCounts[i] * height, HexToColor("DECF7B"));
-            BresenhamError(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("F38D5D"));
+            BresenhamError(texture, x0, fish[i - 1] * height, x1, fish[i] * height, HexToColor("7A99E5"));
+            BresenhamError(texture, x0, born[i - 1] * height, x1, born[i] * height, HexToColor("DECF7B"));
+            BresenhamError(texture, x0, dead[i - 1] * height, x1, dead[i] * height, HexToColor("F38D5D"));
         }
-        graphTexture.Apply();
+        texture.Apply();
     }
 
-    void BresenhamError(int x0, float y0, int x1, float y1, Color color)
+    void DrawFoodGraph(Texture2D texture, List<float> healthy, List<float> toxic)
+    {
+        ClearGraph(texture);
+
+        int width = texture.width;
+        int height = texture.height;
+        int count = Math.Max(healthy.Count, toxic.Count);
+
+        for (int i = 1; i < count; i++)
+        {
+            if (i < healthy.Count)
+            {
+                int x0 = (i - 1) * width / count;
+                int x1 = i * width / count;
+                BresenhamError(texture, x0, healthy[i - 1] * height, x1, healthy[i] * height, HexToColor("00FF00"));
+            }
+            if (i < toxic.Count)
+            {
+                int x0 = (i - 1) * width / count;
+                int x1 = i * width / count;
+                BresenhamError(texture, x0, toxic[i - 1] * height, x1, toxic[i] * height, HexToColor("FF0000"));
+            }
+        }
+        texture.Apply();
+    }
+
+    void BresenhamError(Texture2D texture, int x0, float y0, int x1, float y1, Color color)
     {
         //bresenham's line algorithm
         //difference between the initial and final y coordinates
@@ -148,7 +197,7 @@ public class GraphController : MonoBehaviour
         float fraction = 0;
 
         //set the pixel in the initial coordinates
-        graphTexture.SetPixel(x0, (int)y0, color);
+        texture.SetPixel(x0, (int)y0, color);
 
         //while until the initial x coordinate is equal to the final x coordinate
         while (x0 != x1)
@@ -166,7 +215,7 @@ public class GraphController : MonoBehaviour
             //adjust the error
             fraction += dy;
             //set the pixel in the calculated coordinates
-            graphTexture.SetPixel(x0, (int)y0, color);
+            texture.SetPixel(x0, (int)y0, color);
         }
     }
 
