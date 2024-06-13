@@ -26,7 +26,7 @@ public class GraphController : MonoBehaviour
     void Start()
     {
         graphTexture = new Texture2D(280, 100);
-        graphTexture.filterMode = FilterMode.Point;
+        graphTexture.filterMode = FilterMode.Point; //important to avoid blurring
         lineGraph.sprite = Sprite.Create(graphTexture, new Rect(0, 0, graphTexture.width, graphTexture.height), new Vector2(0.5f, 0.5f), 100.0f, 0, SpriteMeshType.FullRect);
         ClearGraph();
     }
