@@ -21,12 +21,12 @@ public class FlockManager : MonoBehaviour {
     [Header("Boids Settings")]
     [Range(0.0f, 5.0f)] public float minSpeed;
     [Range(0.0f, 5.0f)] public float maxSpeed;
-    [Range(1.0f, 10.0f)] public float maxNeighborDistance;
+    [Range(0.1f, 2.0f)] public float maxNeighborDistance;
     [Range(1.0f, 5.0f)] public float rotationSpeed;
     [Header("Food Settings")]
-    public float healthyFoodSpawnInterval  = 0.5f;
+    public float healthyFoodSpawnInterval  = 1.5f;
     public int nutritionValueHealthy = 20;
-    public float toxicFoodSpawnInterval = 0.5f;
+    public float toxicFoodSpawnInterval = 1.5f;
     public int nutritionValueToxic = 10;
 
     void Start() {
@@ -65,6 +65,12 @@ public class FlockManager : MonoBehaviour {
 
         // Dibuja un cubo en la posición del FlockManager con el tamaño definido por swimLimits
         Gizmos.DrawWireCube(transform.position, swimLimits * 2.0f);
+
+        if(FM != null){
+            // Dibuja una esfera en la posición del FlockManager con el radio definido por maxNeighborDistance
+            Gizmos.color = Color.red;  // Puedes cambiar el color a cualquier otro que prefieras
+            Gizmos.DrawWireSphere(transform.position, FlockManager.FM.maxNeighborDistance);
+        }
     }
 
 
