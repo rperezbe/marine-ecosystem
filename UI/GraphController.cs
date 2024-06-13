@@ -10,10 +10,14 @@ public class GraphController : MonoBehaviour
     public Image toxicFoodConsumedBar;
     public Image lineGraph;
     public Image lineGraphFood;
-    public TextMeshProUGUI maxNumberBar;
-    public TextMeshProUGUI mediumNumberBar;
-    public TextMeshProUGUI maxNumberLine;
-    public TextMeshProUGUI mediumNumberLine;
+    public TextMeshProUGUI maxNumberBarFood;
+    public TextMeshProUGUI mediumNumberBarFood;
+    public TextMeshProUGUI maxNumberLinePopulation;
+    public TextMeshProUGUI mediumNumberLinePopulation;
+    public TextMeshProUGUI maxNumberBarPopulation;
+    public TextMeshProUGUI mediumNumberBarPopulation;
+    public TextMeshProUGUI maxNumberLineFood;
+    public TextMeshProUGUI mediumNumberLineFood;
     public Image actualFishBar;
     public Image fishBornBar;
     public Image fishDeadBar;
@@ -58,14 +62,18 @@ public class GraphController : MonoBehaviour
     void UpdateGraph()
     {
         //assign the maxNumber text value to the maxFood
-        maxNumberBar.text = maxFood.ToString();
+        maxNumberBarFood.text = maxFood.ToString();
+        maxNumberLineFood.text = maxFood.ToString();
         //assign the mediumNumber text value to the half of the maxFood
-        mediumNumberBar.text = (maxFood / 2).ToString();
+        mediumNumberBarFood.text = (maxFood / 2).ToString();
+        mediumNumberLineFood.text = (maxFood / 2).ToString();
 
         //assign the maxNumber text value to the maxFish
-        maxNumberLine.text = maxFish.ToString();
+        maxNumberLinePopulation.text = maxFish.ToString();
+        maxNumberBarPopulation.text = maxFish.ToString();
         //assign the mediumNumber text value to the half of the maxFish
-        mediumNumberLine.text = (maxFish / 2).ToString();
+        mediumNumberLinePopulation.text = (maxFish / 2).ToString();
+        mediumNumberBarPopulation.text = (maxFish / 2).ToString();
 
         if (FlockManager.FM == null)
         {
