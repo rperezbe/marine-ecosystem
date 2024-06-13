@@ -28,6 +28,14 @@ public class UI : MonoBehaviour
     public TextMeshProUGUI bornFishText;
     public TextMeshProUGUI healthyFoodText;
     public TextMeshProUGUI toxicFoodText;
+    //instantiate the backgrounds
+    public Image background1;
+    public Image background2;
+    public Image background3;
+    //instantiate the button backgrounds
+    public Button buttonBackground1;
+    public Button buttonBackground2;
+    public Button buttonBackground3;
     //add more UI Components as needed
 
 
@@ -55,15 +63,16 @@ public class UI : MonoBehaviour
         //don't show the button anymore
         startSimulationButton.gameObject.SetActive(false);
 
-        //don't allow to change anything else once the simulation has started
-        /*frequencySliderHealthy.interactable = false;
-        frequencySliderToxic.interactable = false;
-        neighbourDistanceSlider.interactable = false;*/
         numberOfFishInput.interactable = false;
         nutritionValueHealthySlider.interactable = false;
         nutritionValueToxicSlider.interactable = false;
         //we put the total number of fish at the beginning of the simulation
         numberTotalOfFishInputTMP.text = flockManager.numFish.ToString();
+
+        //hide the button backgrounds
+        buttonBackground1.gameObject.SetActive(false);
+        buttonBackground2.gameObject.SetActive(false);
+        buttonBackground3.gameObject.SetActive(false);
 
         //show graph button is enabled
         showGraphButton.interactable = true;
@@ -171,6 +180,42 @@ public class UI : MonoBehaviour
         byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
         byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
         return new Color(r / 255f, g / 255f, b / 255f);
+    }
+    
+    public void OnBackground1Clicked()
+    {
+        //show the background image
+        background1.gameObject.SetActive(true);
+        //hide the other background images
+        background2.gameObject.SetActive(false);
+        background3.gameObject.SetActive(false);
+
+        //change the opacity of the button backgrounds
+        buttonBackground1.GetComponent<Image>().color = new Color(1, 1, 1, 1); //full opacity
+        buttonBackground2.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f); //minor opacity
+        buttonBackground3.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f); ////minor opacity
+    }
+
+    public void OnBackground2Clicked()
+    {
+        background1.gameObject.SetActive(false);
+        background2.gameObject.SetActive(true);
+        background3.gameObject.SetActive(false);
+
+        buttonBackground1.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f);
+        buttonBackground2.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        buttonBackground3.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f);
+    }
+
+    public void OnBackground3Clicked()
+    {
+        background1.gameObject.SetActive(false);
+        background2.gameObject.SetActive(false);
+        background3.gameObject.SetActive(true);
+
+        buttonBackground1.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f);
+        buttonBackground2.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f);
+        buttonBackground3.GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
 
 }
