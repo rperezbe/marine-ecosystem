@@ -36,8 +36,16 @@ public class UI : MonoBehaviour
     public Button buttonBackground1;
     public Button buttonBackground2;
     public Button buttonBackground3;
-    //add more UI Components as needed
-
+    //instantiate the 4 graphs
+    public Image lineGraphPopulation;
+    public Image lineGraphFood;
+    public Image barGraphPopulation;
+    public Image barGraphFood;
+    //instantiate the 4 graph buttons
+    public Button showLineGraphPopulationButton;
+    public Button showLineGraphFoodButton;
+    public Button showBarGraphPopulationButton;
+    public Button showBarGraphFoodButton;
 
     private void Start()
     {
@@ -217,5 +225,32 @@ public class UI : MonoBehaviour
         buttonBackground2.GetComponent<Image>().color = new Color(1, 1, 1, 0.588f);
         buttonBackground3.GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
+
+    public void ShowLineGraphPopulation()
+    {
+        //activate the graph
+        lineGraphPopulation.gameObject.SetActive(true);
+        //deactivate the other graph
+        barGraphPopulation.gameObject.SetActive(false);
+    }
+
+    public void ShowLineGraphFood()
+    {
+        lineGraphFood.gameObject.SetActive(true);
+        barGraphFood.gameObject.SetActive(false);
+    }
+
+    public void ShowBarGraphPopulation()
+    {
+        barGraphPopulation.gameObject.SetActive(true);
+        lineGraphPopulation.gameObject.SetActive(false);
+    }
+
+    public void ShowBarGraphFood()
+    {
+        barGraphFood.gameObject.SetActive(true);
+        lineGraphFood.gameObject.SetActive(false);
+    }
+
 
 }
