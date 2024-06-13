@@ -167,13 +167,13 @@ public class GraphController : MonoBehaviour
             {
                 int x0 = (i - 1) * width / count;
                 int x1 = i * width / count;
-                BresenhamError(texture, x0, healthy[i - 1] * height, x1, healthy[i] * height, HexToColor("00FF00"));
+                BresenhamError(texture, x0, healthy[i - 1] * height, x1, healthy[i] * height, HexToColor("74E07F"));
             }
             if (i < toxic.Count)
             {
                 int x0 = (i - 1) * width / count;
                 int x1 = i * width / count;
-                BresenhamError(texture, x0, toxic[i - 1] * height, x1, toxic[i] * height, HexToColor("FF0000"));
+                BresenhamError(texture, x0, toxic[i - 1] * height, x1, toxic[i] * height, HexToColor("EA8383"));
             }
         }
         texture.Apply();
