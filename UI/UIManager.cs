@@ -87,14 +87,14 @@ public class UI : MonoBehaviour
 
         //change the text colors of the text input fields
         numberActualOfFishInputTMP.textComponent.color = HexToColor("7A99E5");
-        numberOfDeadFishInputTMP.textComponent.color = HexToColor("000000");
+        numberOfDeadFishInputTMP.textComponent.color = HexToColor("F38D5D");
         numberOfNewBornFishInputTMP.textComponent.color = HexToColor("DECF7B");
         numberOfHealthyFoodConsumedInputTMP.textComponent.color = HexToColor("74E07F");
         numberOfToxicFoodConsumedInputTMP.textComponent.color = HexToColor("EA8383");
 
         //change the text color of the text components
         actualFishText.color = HexToColor("7A99E5");
-        deadFishText.color = HexToColor("000000");
+        deadFishText.color = HexToColor("F38D5D");
         bornFishText.color = HexToColor("DECF7B");
         healthyFoodText.color = HexToColor("74E07F");
         toxicFoodText.color = HexToColor("EA8383");

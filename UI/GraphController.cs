@@ -125,7 +125,7 @@ public class GraphController : MonoBehaviour
             int x1 = i * width / count;
             BresenhamError(x0, fishCounts[i - 1] * height, x1, fishCounts[i] * height, HexToColor("7A99E5"));
             BresenhamError(x0, fishBornCounts[i - 1] * height, x1, fishBornCounts[i] * height, HexToColor("DECF7B"));
-            BresenhamError(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("000000"));
+            BresenhamError(x0, fishDeadCounts[i - 1] * height, x1, fishDeadCounts[i] * height, HexToColor("F38D5D"));
         }
         graphTexture.Apply();
     }
