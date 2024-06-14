@@ -134,7 +134,7 @@ public class Flock : MonoBehaviour {
         Gizmos.color = Color.green;
 
         foreach (GameObject fish in FlockManager.FM.allFish) {
-            if (fish != this.gameObject && Vector3.Distance(transform.position, fish.transform.position) <= FlockManager.FM.maxNeighborDistance) {
+            if (fish != null && fish != this.gameObject && Vector3.Distance(transform.position, fish.transform.position) <= FlockManager.FM.maxNeighborDistance) {
                 Gizmos.DrawLine(transform.position, fish.transform.position);
             }
         }
