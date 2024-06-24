@@ -46,6 +46,10 @@ public class UI : MonoBehaviour
     public Button showLineGraphFoodButton;
     public Button showBarGraphPopulationButton;
     public Button showBarGraphFoodButton;
+    //help panels
+    // public GameObject boidsHelp;
+    // public GameObject foodHelp;
+    public GameObject helpPanel;
 
     private void Start()
     {
@@ -251,6 +255,36 @@ public class UI : MonoBehaviour
         barGraphFood.gameObject.SetActive(true);
         lineGraphFood.gameObject.SetActive(false);
     }
+
+    public void ShowHelp()
+    {
+        helpPanel.gameObject.SetActive(true);
+    }
+    
+    public void HideHelp()
+    {
+        helpPanel.gameObject.SetActive(false);
+    }
+
+    // public void ShowBoidsHelp()
+    // {
+    //     boidsHelp.gameObject.SetActive(true);
+    // }
+
+    // public void HideBoidsHelp()
+    // {
+    //     boidsHelp.gameObject.SetActive(false);
+    // }
+
+    // public void ShowFoodHelp()
+    // {
+    //     foodHelp.gameObject.SetActive(true);
+    // }
+
+    // public void HideFoodHelp()
+    // {
+    //     foodHelp.gameObject.SetActive(false);
+    // }
 
 
 }
