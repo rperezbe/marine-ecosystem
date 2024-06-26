@@ -10,7 +10,7 @@ public class FlockManager : MonoBehaviour {
     public int deadFish;
     public int actualFish;
     public int bornFish;
-    public GameObject[] allFish; //array of fish to access them later
+    public List<GameObject> allFish; //array of fish to access them later
     public List<GameObject> allFood; //array of food to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
     public int healthyFoodConsumed;
@@ -32,10 +32,10 @@ public class FlockManager : MonoBehaviour {
     public int nutritionValueToxic = 10;
 
     void Start() {
-        allFish = new GameObject[numFish];
+        allFish = new List<GameObject>();
         allFood = new List<GameObject>();
         //call to spawn the fishes
-        allFish = spawner.spawnFishes(numFish, swimLimits, this.transform.position);
+        allFish.AddRange(spawner.spawnFishes(numFish, swimLimits, this.transform.position));
 
         //initialize the actual number of fish
         actualFish = numFish;
@@ -49,7 +49,7 @@ public class FlockManager : MonoBehaviour {
         allFood.AddRange(newFood);
 
         if (actualFish == 0 && numFish > 0) {
-            allFish = spawner.spawnFishes(numFish, swimLimits, this.transform.position);
+            allFish.AddRange(spawner.spawnFishes(numFish, swimLimits, this.transform.position));
             actualFish = numFish;
         }
     }
@@ -61,8 +61,7 @@ public class FlockManager : MonoBehaviour {
         //call to the function to be a baby fish
         fish.GetComponent<Flock>().simulation.setBabyFish(true);
         //add the fish to the array
-        int index = allFish.Length;
-        allFish[index-1] = fish;
+        allFish.Add(fish);
         //update the number of the actual fish
         actualFish++;
     }
@@ -76,7 +75,7 @@ public class FlockManager : MonoBehaviour {
                 Destroy(fish);
         }
         //clear the fish list
-        allFish = new GameObject[0];
+        allFish.Clear();
         actualFish = 0;
         bornFish = 0;
         deadFish = 0;
