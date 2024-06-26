@@ -74,8 +74,8 @@ public class UI : MonoBehaviour
     {
         flockManager.enabled = true;
         //don't show the button anymore
-        startSimulationButton.gameObject.SetActive(false);
-        stopSimulationButton.gameObject.SetActive(true);
+        startSimulationButton.interactable = false;
+        stopSimulationButton.interactable = true;
 
         numberOfFishInput.interactable = false;
         nutritionValueHealthySlider.interactable = false;
@@ -97,8 +97,8 @@ public class UI : MonoBehaviour
         flockManager.enabled = false;
         flockManager.ClearSimulation();
         
-        startSimulationButton.gameObject.SetActive(true);
-        stopSimulationButton.gameObject.SetActive(false);
+        startSimulationButton.interactable = true;
+        stopSimulationButton.interactable = false;
         
         numberOfFishInput.interactable = true;
         nutritionValueHealthySlider.interactable = true;
@@ -133,6 +133,10 @@ public class UI : MonoBehaviour
         healthyFoodText.color = HexToColor("74E07F");
         toxicFoodText.color = HexToColor("EA8383");
 
+        //don't show buttons
+        startSimulationButton.gameObject.SetActive(false);
+        stopSimulationButton.gameObject.SetActive(false);
+
     }
 
     public void ShowSimulation()
@@ -155,6 +159,10 @@ public class UI : MonoBehaviour
         bornFishText.color = Color.white;
         healthyFoodText.color = Color.white;
         toxicFoodText.color = Color.white;
+
+        //show buttons
+        startSimulationButton.gameObject.SetActive(true);
+        stopSimulationButton.gameObject.SetActive(true);
     }
 
     public void Update() {
