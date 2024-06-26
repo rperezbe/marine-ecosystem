@@ -36,7 +36,8 @@ public class Spawn : MonoBehaviour {
     }
 
     //function to spawn the food
-    public void spawnFood(Vector3 swimLimits, Vector3 origin, float healthyFoodInterval, float toxicFoodInterval) {
+    public List<GameObject> spawnFood(Vector3 swimLimits, Vector3 origin, float healthyFoodInterval, float toxicFoodInterval) {
+        List<GameObject> spawnedFood = new List<GameObject>();
         //update the timer
         healthyFoodTimer += Time.deltaTime;
         toxicFoodTimer += Time.deltaTime;
@@ -48,7 +49,8 @@ public class Spawn : MonoBehaviour {
                 Random.Range(-swimLimits.x, swimLimits.x),
                 Random.Range(-swimLimits.y, swimLimits.y),
                 Random.Range(-swimLimits.z, swimLimits.z));
-            Instantiate(healthyFoodPrefab, foodPosition, Quaternion.identity);
+            GameObject newHealthyFood = Instantiate(healthyFoodPrefab, foodPosition, Quaternion.identity);
+            spawnedFood.Add(newHealthyFood);
         }
 
         //if the timer is greater than the spawn interval, spawn a new toxic food
@@ -59,7 +61,9 @@ public class Spawn : MonoBehaviour {
                 Random.Range(-swimLimits.x, swimLimits.x),
                 Random.Range(-swimLimits.y, swimLimits.y),
                 Random.Range(-swimLimits.z, swimLimits.z));
-            Instantiate(toxicFoodPrefab, foodPosition, Quaternion.identity);
+            GameObject newToxicFood = Instantiate(toxicFoodPrefab, foodPosition, Quaternion.identity);
+            spawnedFood.Add(newToxicFood);
         }
+        return spawnedFood;
     }
 }

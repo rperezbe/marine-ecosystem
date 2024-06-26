@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
 {
     public FlockManager flockManager;
     public Button startSimulationButton;
+    public Button stopSimulationButton;
     public Slider frequencySliderHealthy;
     public Slider frequencySliderToxic;
     public Slider neighbourDistanceSlider;
@@ -74,6 +75,7 @@ public class UI : MonoBehaviour
         flockManager.enabled = true;
         //don't show the button anymore
         startSimulationButton.gameObject.SetActive(false);
+        stopSimulationButton.gameObject.SetActive(true);
 
         numberOfFishInput.interactable = false;
         nutritionValueHealthySlider.interactable = false;
@@ -88,6 +90,26 @@ public class UI : MonoBehaviour
 
         //show graph button is enabled
         showGraphButton.interactable = true;
+    }
+
+    public void StopSimulation()
+    {
+        flockManager.enabled = false;
+        flockManager.ClearSimulation();
+        
+        startSimulationButton.gameObject.SetActive(true);
+        stopSimulationButton.gameObject.SetActive(false);
+        
+        numberOfFishInput.interactable = true;
+        nutritionValueHealthySlider.interactable = true;
+        nutritionValueToxicSlider.interactable = true;
+
+        //hide the button backgrounds
+        buttonBackground1.gameObject.SetActive(true);
+        buttonBackground2.gameObject.SetActive(true);
+        buttonBackground3.gameObject.SetActive(true);
+
+        showGraphButton.interactable = false;
     }
 
     public void ShowGraph()

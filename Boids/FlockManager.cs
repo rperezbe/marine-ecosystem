@@ -11,6 +11,7 @@ public class FlockManager : MonoBehaviour {
     public int actualFish;
     public int bornFish;
     public GameObject[] allFish; //array of fish to access them later
+    public List<GameObject> allFood; //array of food to access them later
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
     public int healthyFoodConsumed;
     public int toxicFoodConsumed;
@@ -32,7 +33,7 @@ public class FlockManager : MonoBehaviour {
 
     void Start() {
         allFish = new GameObject[numFish];
-
+        allFood = new List<GameObject>();
         //call to spawn the fishes
         allFish = spawner.spawnFishes(numFish, swimLimits, this.transform.position);
 
@@ -44,7 +45,13 @@ public class FlockManager : MonoBehaviour {
 
     void Update() {
         //call to spawn the food
-        spawner.spawnFood(swimLimits, this.transform.position, healthyFoodSpawnInterval, toxicFoodSpawnInterval);
+        List<GameObject> newFood = spawner.spawnFood(swimLimits, this.transform.position, healthyFoodSpawnInterval, toxicFoodSpawnInterval);
+        allFood.AddRange(newFood);
+
+        if (actualFish == 0 && numFish > 0) {
+            allFish = spawner.spawnFishes(numFish, swimLimits, this.transform.position);
+            actualFish = numFish;
+        }
     }
 
     //function to spawn the baby fishes
@@ -58,6 +65,32 @@ public class FlockManager : MonoBehaviour {
         allFish[index-1] = fish;
         //update the number of the actual fish
         actualFish++;
+    }
+
+    //function to clear the simulation
+    public void ClearSimulation()
+    {
+        foreach (GameObject fish in allFish)
+        {
+            if (fish != null)
+                Destroy(fish);
+        }
+        //clear the fish list
+        allFish = new GameObject[0];
+        actualFish = 0;
+        bornFish = 0;
+        deadFish = 0;
+
+        foreach (GameObject food in allFood)
+        {
+            if (food != null)
+                Destroy(food);
+        }
+        //clear the food list
+        allFood.Clear();
+        healthyFoodConsumed = 0;
+        toxicFoodConsumed = 0;
+
     }
 
     void OnDrawGizmos() {
