@@ -15,6 +15,7 @@ public class FlockManager : MonoBehaviour {
     public Vector3 swimLimits = new Vector3(2.0f, 2.0f, 2.0f);
     public int healthyFoodConsumed;
     public int toxicFoodConsumed;
+    public bool shouldRegenerateFish = false;
 
     [Header("Fish Settings")]
     [Range(1.0f, 3.0f)] public float minSize;
@@ -48,7 +49,8 @@ public class FlockManager : MonoBehaviour {
         List<GameObject> newFood = spawner.spawnFood(swimLimits, this.transform.position, healthyFoodSpawnInterval, toxicFoodSpawnInterval);
         allFood.AddRange(newFood);
 
-        if (actualFish == 0 && numFish > 0) {
+        if (actualFish == 0 && numFish > 0 && shouldRegenerateFish == true) {
+            shouldRegenerateFish = false;
             allFish.AddRange(spawner.spawnFishes(numFish, swimLimits, this.transform.position));
             actualFish = numFish;
         }

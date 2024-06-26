@@ -73,6 +73,7 @@ public class UI : MonoBehaviour
     //method to start the simulation (asigned to the event start simulation button)
     public void StartSimulation()
     {
+        flockManager.shouldRegenerateFish = true;
         flockManager.enabled = true;
         //don't show the button anymore
         startSimulationButton.interactable = false;
