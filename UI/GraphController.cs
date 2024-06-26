@@ -244,4 +244,17 @@ public class GraphController : MonoBehaviour
         byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
         return new Color(r / 255f, g / 255f, b / 255f);
     }
+
+    public void ClearGraphs()
+    {
+        ClearGraph(graphTexture);
+        ClearGraph(foodGraphTexture);
+
+        //clean also the data lists
+        fishCounts.Clear();
+        fishBornCounts.Clear();
+        fishDeadCounts.Clear();
+        healthyFoodCounts.Clear();
+        toxicFoodCounts.Clear();
+    }
 }

@@ -51,6 +51,7 @@ public class UI : MonoBehaviour
     // public GameObject boidsHelp;
     // public GameObject foodHelp;
     public GameObject helpPanel;
+    public GraphController graphController;
 
     private void Start()
     {
@@ -96,7 +97,8 @@ public class UI : MonoBehaviour
     {
         flockManager.enabled = false;
         flockManager.ClearSimulation();
-        
+        graphController.ClearGraphs();
+
         startSimulationButton.interactable = true;
         stopSimulationButton.interactable = false;
         
